@@ -36,6 +36,11 @@ module.exports = {
         // new webpack.optimize.UglifyJsPlugin()
     ],
     node: {
-        fs: 'empty'
-    }
+        fs: 'empty',
+    },
+    resolve: {
+        alias: {
+           handlebars: 'handlebars/dist/handlebars.min.js',
+        },
+    },
 };
