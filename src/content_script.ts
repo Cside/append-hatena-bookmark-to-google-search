@@ -18,8 +18,8 @@ const getQ = (): string | null => {
         sideBlock.removeChild(sideBlock.firstChild)
     }
 
-    chrome.runtime.sendMessage({}, (json: string) => {
-        sideBlock.textContent = json
+    chrome.runtime.sendMessage({ q }, (json: string) => {
+        sideBlock.innerHTML = `<pre><code>${json}</code></pre>`
     })
 
     // var source = '<p>Hello, my name is {{name}}. I am from {{hometown}}. I have ' +
