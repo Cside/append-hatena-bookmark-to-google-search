@@ -1,14 +1,7 @@
-const p = m => { console.log(m) }
-const pj = m => { console.log(JSON.stringify(m, null, '  ')) }
-
-const getQ = (): string | null => {
-    const m = location.href.match(/[?&]q=([^&]+)/)
-    if (!m) return null
-    return decodeURIComponent(m[1].replace(/\+/g, ' '))
-}
+import { p, j, getQ } from './utils'
 
 (() => {
-    const q = getQ() // space で分割とかはやってない ...
+    const q = getQ(location.href) // space で分割とかはやってない ...
     if (!q) return
 
     const sideBlock = document.querySelector('#rhs_block')
