@@ -1,13 +1,13 @@
 {
   "manifest_version": 2,
 
-  "name": "Chrome Extension TypeScript Starter",
-  "description": "Chrome Extension, TypeScript, Visual Studio Code",
+  "name": "Append hatena bookmark to google search",
+  "description": "",
   "version": "1.0",
 
   "content_scripts": [
       {
-          "matches": ["<all_urls>"],
+          "matches": ["https://www.google.co.jp/search*"],
           "js": ["js/vendor.js", "js/content_script.js"]
       }
   ],
@@ -18,6 +18,6 @@
 
   "permissions": [
     "storage",
-    "<all_urls>"
+    "http://b.hatena.ne.jp/Cside/search/json*"
   ]
 }
