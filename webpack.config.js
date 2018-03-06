@@ -34,5 +34,8 @@ module.exports = {
 
         // minify
         // new webpack.optimize.UglifyJsPlugin()
-    ]
+    ],
+    node: {
+        fs: 'empty'
+    }
 };
