@@ -6,7 +6,7 @@
         "sourceMap": false,
         "rootDir": "src",
         "outDir": "dist/js",
-        "strictNullChecks": true,
+        "strict": true,
         "noEmitOnError": true
     }
 }
