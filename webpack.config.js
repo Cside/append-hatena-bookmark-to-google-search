@@ -18,9 +18,6 @@ module.exports = {
             loader: 'ts-loader'
         }]
     },
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js']
-    },
     plugins: [
 
         // pack common vender files
@@ -39,6 +36,7 @@ module.exports = {
         fs: 'empty',
     },
     resolve: {
+        extensions: ['.ts', '.tsx', '.js'],
         alias: {
            handlebars: 'handlebars/dist/handlebars.min.js',
         },
