@@ -1,17 +1,20 @@
 // Karma configuration
 // Generated on Tue Mar 06 2018 16:25:55 GMT+0900 (JST)
 
+var webpackConfig = require('./webpack.config.js');
+
 module.exports = function (config) {
     config.set({
         // いる？
         basePath: '',
         browsers: ['ChromeHeadless'],
-        frameworks: [ 'mocha', 'chai' ],
-        files: [ 'src/**/*_test.js' ],
+        // frameworks: [ 'mocha', 'chai' ],
+        frameworks: [ 'mocha' ],
+        files: [ 'src/**/*_test.ts' ],
         // いる？
         webpack: {
             devtool: 'eval-source-map',
-            debug: true,
+            // debug: true,
             module: webpackConfig.module,
             resolve: webpackConfig.resolve
         },
