@@ -1,9 +1,8 @@
 // XXX /runtime は何が違う？
 import Handlebars = require('handlebars');
-// import Axios, { AxiosResponse } from 'axios';
-import Axios from 'axios';
+import Axios, { AxiosResponse } from 'axios';
 import { Bookmarks, isValidBookmarks } from './types/bookmarks'
-// import { MyName, isValidMyName } from './types/my_name'
+import { MyName, isValidMyName } from './types/my_name'
 import { p, j, pj } from './utils'
 
 type Req = { q: string }
@@ -32,28 +31,29 @@ type Req = { q: string }
         timeout: 20000,
     })
 
-    // TODO: cb にどんな型でも入れちゃえる気がする ...
-    chrome.runtime.onMessage.addListener((req: Req, sender, cb: (string) => void) => {
-        // /my/search でも出来るんだけど、302 redirect に 2 sec くらいかかるので id 指定 ...
-        axios.get('http://b.hatena.ne.jp/my/search/json', { params: { q: req.q } }).then(res => {
-            const data = res.data as Bookmarks
-            if (!isValidBookmarks(data))
-                return Promise.reject(new Error(`invalid response. data: ${JSON.stringify(data)}`))
-            cb(compiledTemplate(data))
-        }).catch(e => {
-            console.error(e)
-            cb(String(e)) // TODO: Error handling
-        })
-        return true
-    })
+    axios.get('http://b.hatena.ne.jp/my.name').then((res: AxiosResponse) => {
+        const data = res.data as MyName
+        if (!isValidMyName(data))
+            throw new Error(`invalid response. data: ${JSON.stringify(data)}`)
+        return data.name
 
-    //axios.get('http://b.hatena.ne.jp/my.name').then(res: AxiosResponse => {
-    //    const data = res.data as MyName
-    //    if (!isValidMyName(data))
-    //        return Promise.reject(new Error(`invalid response. data: ${JSON.stringify(data)}`))
-    //    return data.name
-    //}).then(name => {
-    //}).catch(e => {
-    //    console.error(e)
-    //});
+    }).then(name => {
+        // TODO: cb にどんな型でも入れちゃえる気がする ...
+        chrome.runtime.onMessage.addListener((req: Req, sender, cb: (string) => void) => {
+            // /my/search でも出来るんだけど、302 redirect に 2 sec くらいかかるので id 指定 ...
+            axios.get(`http://b.hatena.ne.jp/${name}/search/json`, { params: { q: req.q } }).then((res: AxiosResponse) => {
+                const data = res.data as Bookmarks
+                if (!isValidBookmarks(data))
+                    // Promise.reject() だとコンパイルエラーになった ... Why ?
+                    throw new Error(`invalid response. data: ${JSON.stringify(data)}`)
+                cb(compiledTemplate(data))
+            }).catch(e => {
+                console.error(e)
+                cb(String(e)) // TODO: Error handling
+            })
+            return true
+        })
+    }).catch(e => {
+        console.error(e)
+    });
 })()
