@@ -8,8 +8,7 @@ module.exports = function (config) {
         // いる？
         basePath: '',
         browsers: ['ChromeHeadless'],
-        // frameworks: [ 'mocha', 'chai' ],
-        frameworks: [ 'mocha' ],
+        frameworks: [ 'mocha', 'chai' ],
         files: [ 'src/**/*_test.ts' ],
         // いる？
         webpack: {
@@ -28,10 +27,11 @@ module.exports = function (config) {
         plugins: [
             'karma-webpack',
             'karma-mocha',
+            'karma-chai',
             'karma-chrome-launcher'
         ],
         preprocessors: {
-            'src/**/*_test.js': ['webpack']
+            'src/**/*_test.ts': ['webpack']
         },
         logLevel: config.LOG_INFO,
         autoWatch: true,
