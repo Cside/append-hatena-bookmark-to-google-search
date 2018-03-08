@@ -3,13 +3,13 @@
 
 var webpackConfig = require('./webpack.config.js');
 
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
         // いる？
         basePath: '',
         browsers: ['ChromeHeadless'],
-        frameworks: [ 'mocha', 'chai' ],
-        files: [ 'src/**/*_test.ts' ],
+        frameworks: ['mocha', 'chai'],
+        files: ['src/**/*_test.ts'],
         // いる？
         webpack: {
             devtool: 'eval-source-map',
@@ -34,11 +34,14 @@ module.exports = function (config) {
             'src/**/*_test.ts': ['webpack']
         },
         logLevel: config.LOG_INFO,
-        autoWatch: true,
+        // autoWatch: true,
         reporters: ['progress'],
         port: 9876,
         colors: true,
         singleRun: false,
-        concurrency: Infinity
+        concurrency: Infinity,
+        mime: {
+            'text/x-typescript': ['ts', 'tsx']
+        },
     })
 }
