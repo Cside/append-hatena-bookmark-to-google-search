@@ -41,7 +41,7 @@ type Req = { q: string }
         // TODO: cb にどんな型でも入れちゃえる気がする ...
         chrome.runtime.onMessage.addListener((req: Req, sender, cb: (string) => void) => {
             // /my/search でも出来るんだけど、302 redirect に 2 sec くらいかかるので id 指定 ...
-            axios.get(`http://b.hatena.ne.jp/${name}/search/json`, { params: { q: req.q } }).then((res: AxiosResponse) => {
+            axios.get(`http://b.hatena.ne.jp/${name}/search/json`, { params: { q: req.q, limit: 5 } }).then((res: AxiosResponse) => {
                 const data = res.data as Bookmarks
                 if (!isValidBookmarks(data))
                     // Promise.reject() だとコンパイルエラーになった ... Why ?
@@ -54,6 +54,7 @@ type Req = { q: string }
             return true
         })
     }).catch(e => {
+        // TODO: Error Handling
         console.error(e)
     });
 })()
