@@ -4,19 +4,17 @@
   "name": "Append hatena bookmark to google search",
   "description": "",
   "version": "1.0",
-
   "content_scripts": [{
     "matches": [
       "https://www.google.co.jp/search*"
     ],
     "js": ["js/vendor.js", "js/content_script.js"]
   }],
-
   "background": {
     "page": "background.html"
   },
-
   "permissions": [
     "http://b.hatena.ne.jp/Cside/search/json*"
-  ]
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

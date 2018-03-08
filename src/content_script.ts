@@ -6,13 +6,16 @@ import { p, j, getQ } from './utils'
 
     const sideBlock = document.querySelector('#rhs_block')
     if (!sideBlock) return
-    // TODO 消すまでもない。下に追いやるとかで良いのでは。
+    // TODO:
+    // 消すまでもない。下に追いやるとかで良いのでは。
+    // てか、ブクマ検索結果を受け取ってからいじるべき。
     while (sideBlock.firstChild) {
         sideBlock.removeChild(sideBlock.firstChild)
     }
 
-    chrome.runtime.sendMessage({ q }, (json: string) => {
-        sideBlock.innerHTML = `<pre><code>${json}</code></pre>`
+    chrome.runtime.sendMessage({ q }, (html: string) => {
+        p(html)
+        sideBlock.innerHTML = html
     })
 
     // var source = '<p>Hello, my name is {{name}}. I am from {{hometown}}. I have ' +
