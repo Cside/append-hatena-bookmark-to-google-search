@@ -34,7 +34,7 @@ module.exports = function(config) {
             'src/**/*_test.ts': ['webpack']
         },
         logLevel: config.LOG_INFO,
-        // autoWatch: true,
+        autoWatch: true,
         reporters: ['progress'],
         port: 9876,
         colors: true,

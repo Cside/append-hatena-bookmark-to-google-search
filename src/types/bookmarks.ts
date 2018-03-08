@@ -1,3 +1,4 @@
+// 必要なものだけ定義している。これが全てではない
 export type Bookmarks = {
     bookmarks: {
         timestamp: number
@@ -10,15 +11,19 @@ export type Bookmarks = {
             eid: string
         }
     }[],
+    meta: {
+        total: number,
+    },
 }
 
 export const isValidBookmarks = (res: Bookmarks): boolean => {
     return (
-        Array.isArray(res) &&
-        res.length == 0 || (
-            res[0] !== undefined &&
-            res[0].entry !== undefined &&
-            res[0].url !== undefined
+        Array.isArray(res.bookmarks) && (
+            res.bookmarks.length === 0 || (
+                typeof res.bookmarks[0] == 'object' &&
+                typeof res.bookmarks[0].entry == 'object' &&
+                typeof res.bookmarks[0].entry.url === 'string'
+            )
         )
     )
 }
