@@ -1,9 +1,10 @@
 // XXX /runtime は何が違う？
 import Handlebars = require('handlebars');
-import Axios, { AxiosResponse } from 'axios';
+import Axios, { AxiosResponse, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { Bookmarks, isValidBookmarks } from './types/bookmarks'
 import { MyName, isValidMyName } from './types/my_name'
 import { p, j, pj } from './utils'
+import queryString = require('query-string')
 
 type Req = { q: string }
 
@@ -25,16 +26,42 @@ type Req = { q: string }
     {{/each}}
     `;
     const compiledTemplate = Handlebars.compile(template);
+
+    // このへんは今質的な処理でないから外に切りだしたほうが良いかも
     const axios = Axios.create({
         withCredentials: true,
         responseType: 'json',
         timeout: 20000,
     })
+    const setLogger = (axios: AxiosInstance): AxiosInstance => {
+        const url = (conf): string => {
+            const query = queryString.stringify(conf.params)
+            // conf.url に queryString が含まれる場合死ぬ ...
+            return conf.url + (query ? '?' + query : '')
+        }
 
-    axios.get('http://b.hatena.ne.jp/my.name').then((res: AxiosResponse) => {
+        var start: number
+        axios.interceptors.request.use((conf: AxiosRequestConfig) => {
+            start = new Date().getTime();
+
+            const method = conf.method ? conf.method.toUpperCase() + ' ' : ''
+            p(`--> ${method}${url(conf)}`)
+
+            return conf
+        })
+        axios.interceptors.response.use((res: AxiosResponse) => {
+            const elapsedSec = (new Date().getTime() - start) / 1000
+            p(`<-- ${res.status} ${url(res.config)} (${elapsedSec}s)`)
+            return res
+        })
+        return axios
+    }
+
+    // setlogger ダサい...
+    setLogger(axios).get('http://b.hatena.ne.jp/my.name').then((res: AxiosResponse) => {
         const data = res.data as MyName
         if (!isValidMyName(data))
-            throw new Error(`invalid response. data: ${JSON.stringify(data)}`)
+            throw new Error(`invalid response.data: ${JSON.stringify(data)}`)
         return data.name
 
     }).then(name => {
