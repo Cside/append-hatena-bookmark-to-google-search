@@ -35,6 +35,7 @@ describe('isValidBookmarks', () => {
         },
     ].forEach(tt => {
         it(tt.name, () => {
+            // TODO: isValidBookmarks 晒しただけで死ぬ...
             assert.equal(
                 isValidBookmarks(tt.input as any as Bookmarks),
                 tt.want,

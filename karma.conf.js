@@ -3,11 +3,11 @@
 
 var webpackConfig = require('./webpack.config.js');
 
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
         // いる？
         basePath: '',
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless'],
         frameworks: ['mocha', 'chai'],
         files: ['src/**/*_test.ts'],
         // いる？
@@ -28,7 +28,7 @@ module.exports = function (config) {
             'karma-webpack',
             'karma-mocha',
             'karma-chai',
-            'karma-phantomjs-launcher'
+            'karma-chrome-launcher',
         ],
         preprocessors: {
             'src/**/*_test.ts': ['webpack']
