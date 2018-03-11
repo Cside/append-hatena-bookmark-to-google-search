@@ -63,9 +63,7 @@ class Entry {
 
     private _count: string
     count_int: number
-    get count(): string {
-        return this._count
-    }
+    get count(): string { return this._count }
     set count(count: string) {
         this._count = count
         this.count_int = Number(count)
@@ -77,7 +75,8 @@ class Entry {
     get url(): string { return this._url }
     set url(url: string) {
         this._url = url
-        this.favicon_url = `https://cdn-ak.favicon.st-hatena.com/?url=${url.replace(Entry.baseUrlRegExp, "$1")}`
+        const baseUrl = url.replace(Entry.baseUrlRegExp, "$1")
+        this.favicon_url = `https://cdn-ak.favicon.st-hatena.com/?url=${encodeURIComponent(baseUrl)}`
     }
 }
 
