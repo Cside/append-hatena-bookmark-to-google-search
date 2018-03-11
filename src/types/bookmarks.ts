@@ -41,36 +41,43 @@ export class Bookmarks {
 }
 
 class Bookmark {
-    private _timestamp: number
     comment: string
-    created_date: string
 
     @Type(() => Entry)
     entry: Entry
 
-    get timestamp(): number {
-        return this._timestamp
-    }
+    private _timestamp: number
+    created_ymd: string
+    get timestamp(): number { return this._timestamp }
     set timestamp(ts: number) {
         this._timestamp = ts
         const d = new Date(ts * 1000)
-        this.created_date = sprintf('%04d/%02d/%02d', d.getFullYear(), d.getMonth() + 1, d.getDate())
+        this.created_ymd = sprintf('%04d/%02d/%02d', d.getFullYear(), d.getMonth() + 1, d.getDate())
     }
 }
 
 class Entry {
     snippet: string
-    _count: string
-    count_int: number
-    url: string
     title: string
     eid: string
+
+    private _count: string
+    count_int: number
     get count(): string {
         return this._count
     }
     set count(count: string) {
         this._count = count
         this.count_int = Number(count)
+    }
+
+    static baseUrlRegExp = new RegExp('^(https?://[^/]+/).+$')
+    private _url: string
+    favicon_url: string
+    get url(): string { return this._url }
+    set url(url: string) {
+        this._url = url
+        this.favicon_url = `https://cdn-ak.favicon.st-hatena.com/?url=${url.replace(Entry.baseUrlRegExp, "$1")}`
     }
 }
 

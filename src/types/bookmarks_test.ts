@@ -84,7 +84,7 @@ describe('fromJSON', () => {
             if (e) console.error(`[ERROR] ${e}`)
         })
         if (bookmarks) {
-            assert.equal(bookmarks.bookmarks[0].created_date, "2017/12/26")
+            assert.equal(bookmarks.bookmarks[0].created_ymd, "2017/12/26")
             assert.equal(bookmarks.meta.total, 59)
             assert.equal(bookmarks.bookmarks[0].entry.count_int, 35)
         } else {

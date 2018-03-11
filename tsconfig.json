@@ -5,6 +5,7 @@
         "sourceMap": false,
         "rootDir": "src",
         "outDir": "dist/js",
+        "strictPropertyInitialization": false,
         "noImplicitAny": false,
         "strict": true,
         "noEmitOnError": true,
