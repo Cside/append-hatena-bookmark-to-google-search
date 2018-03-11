@@ -9,30 +9,30 @@ export class Bookmarks {
     @Type(() => Bookmark)
     meta: Meta
 
-    // Bookmarks? だと怒られるの何故 ...
-    static fromJSON(json: string, cb: (Error?) => void): Bookmarks | null {
-        let parsed: Object
+    // Bookmarks? だと怒られるの何故 ...。もしかして引数じゃないと使えないの？
+    static fromJSON(json: string, cb: (Error?) => void): Bookmarks | undefined {
+        let obj: Object
         try {
-            parsed = JSON.parse(json)
+            obj = JSON.parse(json)
         } catch (e) {
             cb(new Error(`JSON parse error: ${e}`))
-            return null
+            return
         }
-        const bookmarks = plainToClass(Bookmarks, parsed)
+        const bookmarks = plainToClass(Bookmarks, obj)
         if (!Bookmarks.isValid(bookmarks)) {
-            cb(new Error(`Not valid bookmarks`))
-            return null
+            cb(new Error(`Invalid bookmarks`))
+            return
         }
         return bookmarks
     }
 
-    static isValid = (bookmarks): boolean => {
+    static isValid = (self: Bookmarks): boolean => {
         return (
-            Array.isArray(bookmarks) && (
-                bookmarks.length === 0 || (
-                    typeof bookmarks[0] == 'object' &&
-                    typeof bookmarks[0].entry == 'object' &&
-                    typeof bookmarks[0].entry.url === 'string'
+            Array.isArray(self.bookmarks) && (
+                self.bookmarks.length === 0 || (
+                    self.bookmarks[0] instanceof Bookmarks &&
+                    typeof self.bookmarks[0].entry == 'object' &&
+                    typeof self.bookmarks[0].entry.url === 'string'
                 )
             )
         )

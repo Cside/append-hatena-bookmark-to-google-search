@@ -5,44 +5,54 @@ describe('isValid()', () => {
     [
         {
             name: "bookmarks is empty",
-            input: { bookmarks: [] },
-            want: true,
+            input: `{ "bookmarks": [] }`,
+            wantErr: false,
         },
         {
             name: "doesn't have bookmarks prop",
-            input: {},
-            want: false,
+            input: `{}`,
+            wantErr: true,
         },
         {
-            name: "bookmarks[0].bookmark is undefiend",
-            input: { bookmarks: [undefined] },
-            want: false,
+            name: "bookmarks[0].bookmark is null",
+            input: `{ "bookmarks": [null] }`,
+            wantErr: true,
         },
         {
             name: "bookmarks[0].bookmark has entry",
-            input: { bookmarks: [{ entry: { url: "" } }] },
-            want: true,
+            input: `{ "bookmarks": [{ "entry": { "url": "" } }] }`,
+            wantErr: true,
         },
         {
             name: "bookmarks[0].bookmark.url isn't a string",
-            input: { bookmarks: [{ entry: {} }] },
-            want: false,
+            input: `{ "bookmarks": [{ "entry": {} }] }`,
+            wantErr: true,
         },
         {
             name: "has meta",
-            input: { bookmarks: [], meta: { total: 100 } },
-            want: true,
+            input: `{ "bookmarks": [], "meta": { "total": 100 } }`,
+            wantErr: false,
         },
     ].forEach(tt => {
         it(tt.name, () => {
-            assert.equal(
-                Bookmarks.isValid(tt.input as any as Bookmarks),
-                tt.want,
-            )
+            const b = Bookmarks.fromJSON(tt.input, (e) => {
+                // TODO: なぜかこいつらが実行テストにカウントされない
+                if (tt.wantErr) {
+                    assert.isOk(e)
+                } else {
+                    assert.isNotOk(e)
+                }
+            })
+            if (tt.wantErr) {
+                assert.isNotOk(b)
+            } else {
+                assert.isOk(b)
+            }
         })
     })
 })
 
+/*
 describe('fromJSON', () => {
     const json = `{
         "bookmarks": [
@@ -77,3 +87,4 @@ describe('fromJSON', () => {
         console.log(bookmarks)
     })
 });
+*/
