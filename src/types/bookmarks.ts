@@ -1,6 +1,7 @@
 import { Type, plainToClass } from "class-transformer";
 import 'reflect-metadata'
 import { sprintf } from 'sprintf-js'
+import { p, pj } from '../utils'
 
 export class Bookmarks {
     @Type(() => Bookmark)
@@ -15,12 +16,12 @@ export class Bookmarks {
         try {
             obj = JSON.parse(json)
         } catch (e) {
-            cb(new Error(`JSON parse error: ${e}`))
+            cb(new Error(`JSON parse error. Error: ${e}, JSON: ${json}`))
             return
         }
         const bookmarks = plainToClass(Bookmarks, obj)
         if (!Bookmarks.isValid(bookmarks)) {
-            cb(new Error(`Invalid bookmarks`))
+            cb(new Error(`Invalid bookmarks.`))
             return
         }
         return bookmarks
@@ -30,7 +31,7 @@ export class Bookmarks {
         return (
             Array.isArray(self.bookmarks) && (
                 self.bookmarks.length === 0 || (
-                    self.bookmarks[0] instanceof Bookmarks &&
+                    self.bookmarks[0] instanceof Bookmark &&
                     typeof self.bookmarks[0].entry == 'object' &&
                     typeof self.bookmarks[0].entry.url === 'string'
                 )

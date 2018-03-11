@@ -1,7 +1,7 @@
 import { Bookmarks } from './bookmarks'
 import { assert } from 'chai'
 
-describe('isValid()', () => {
+describe('isValid', () => {
     [
         {
             name: "bookmarks is empty",
@@ -21,7 +21,7 @@ describe('isValid()', () => {
         {
             name: "bookmarks[0].bookmark has entry",
             input: `{ "bookmarks": [{ "entry": { "url": "" } }] }`,
-            wantErr: true,
+            wantErr: false,
         },
         {
             name: "bookmarks[0].bookmark.url isn't a string",
@@ -52,7 +52,6 @@ describe('isValid()', () => {
     })
 })
 
-/*
 describe('fromJSON', () => {
     const json = `{
         "bookmarks": [
@@ -80,11 +79,15 @@ describe('fromJSON', () => {
             "elapsed": 5.579
         }
     }`
-    it('decode', () => {
-        const bookmarks = Bookmarks.fromJSON(json, (e: Error | undefined) => {
-            if (e) throw e
+    it('can parse', () => {
+        const bookmarks = Bookmarks.fromJSON(json, (e) => {
+            if (e) console.error(`[ERROR] ${e}`)
         })
-        console.log(bookmarks)
+        if (bookmarks) {
+            assert.equal(bookmarks.bookmarks[0].created_date, "2017/12/26")
+            assert.equal(bookmarks.meta.total, 59)
+        } else {
+            // TODO: fail...
+        }
     })
-});
-*/
+})
