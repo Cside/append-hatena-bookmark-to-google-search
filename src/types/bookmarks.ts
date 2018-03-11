@@ -60,10 +60,18 @@ class Bookmark {
 
 class Entry {
     snippet: string
-    count: string
+    _count: string
+    count_int: number
     url: string
     title: string
     eid: string
+    get count(): string {
+        return this._count
+    }
+    set count(count: string) {
+        this._count = count
+        this.count_int = Number(count)
+    }
 }
 
 class Meta {
