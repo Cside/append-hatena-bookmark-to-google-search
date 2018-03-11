@@ -5,6 +5,7 @@
         "sourceMap": false,
         "rootDir": "src",
         "outDir": "dist/js",
+        "noImplicitAny": false,
         "strict": true,
         "noEmitOnError": true,
         "experimentalDecorators": true

@@ -1,9 +1,14 @@
 const Debug = true
 
-export const p = m => { if (Debug) console.debug(m) }
-export const j = (m): string => { return JSON.stringify(m, null, '  ') }
-export const pj = m => { p(j(m)) }
-
+export const p = (...stuffs: any[]) => {
+    if (Debug) console.debug(...stuffs)
+}
+export const j = (obj: any): string => {
+    return JSON.stringify(obj, null, '  ')
+}
+export const pj = (stuff: any) => {
+    p(j(pj))
+}
 
 export const getQ = (url: string): string | null => {
     const m = url.match(/[?&]q=([^&]+)/)
