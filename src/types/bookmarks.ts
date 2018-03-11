@@ -70,13 +70,23 @@ class Entry {
     }
 
     static baseUrlRegExp = new RegExp('^(https?://[^/]+/).+$')
+    static schemaSeparationRegExp = new RegExp('^(https?)://(.+)$')
     private _url: string
     favicon_url: string
+    bookmark_url: string
     get url(): string { return this._url }
     set url(url: string) {
         this._url = url
+
         const baseUrl = url.replace(Entry.baseUrlRegExp, "$1")
         this.favicon_url = `https://cdn-ak.favicon.st-hatena.com/?url=${encodeURIComponent(baseUrl)}`
+        const m = url.match(Entry.schemaSeparationRegExp)
+        if (m) {
+            const [scheme, suffix] = [m[1], m[2]]
+            let bookmark_url = 'http://b.hatena.ne.jp/entry/'
+            if (scheme === 'https') bookmark_url += 's/'
+            this.bookmark_url = bookmark_url + suffix
+        }
     }
 }
 

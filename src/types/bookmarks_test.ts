@@ -87,7 +87,14 @@ describe('fromJSON', () => {
             assert.equal(bookmarks.bookmarks[0].created_ymd, "2017/12/26")
             assert.equal(bookmarks.meta.total, 59)
             assert.equal(bookmarks.bookmarks[0].entry.count_int, 35)
-            assert.equal(bookmarks.bookmarks[0].entry.favicon_url, 'https://cdn-ak.favicon.st-hatena.com/?url=http%3A%2F%2Fchristina04.hatenablog.com%2F')
+            assert.equal(
+                bookmarks.bookmarks[0].entry.favicon_url,
+                'https://cdn-ak.favicon.st-hatena.com/?url=http%3A%2F%2Fchristina04.hatenablog.com%2F',
+            )
+            assert.equal(
+                bookmarks.bookmarks[0].entry.bookmark_url,
+                'http://b.hatena.ne.jp/entry/christina04.hatenablog.com/entry/2017/01/06/190000',
+            )
         } else {
             // TODO: fail...
         }
