@@ -1,7 +1,7 @@
-import { Bookmarks, isValidBookmarks } from './bookmarks'
-import { assert } from "chai"
+import { Bookmarks } from './bookmarks'
+import { assert } from 'chai'
 
-describe('isValidBookmarks', () => {
+describe('isValid()', () => {
     [
         {
             name: "bookmarks is empty",
@@ -35,11 +35,45 @@ describe('isValidBookmarks', () => {
         },
     ].forEach(tt => {
         it(tt.name, () => {
-            // TODO: isValidBookmarks 晒しただけで死ぬ...
             assert.equal(
-                isValidBookmarks(tt.input as any as Bookmarks),
+                Bookmarks.isValid(tt.input as any as Bookmarks),
                 tt.want,
             )
         })
     })
 })
+
+describe('fromJSON', () => {
+    const json = `{
+        "bookmarks": [
+            {
+                "is_private": 0,
+                "entry": {
+                    "snippet": "This is snippet",
+                    "count": "35",
+                    "score_vals": null,
+                    "url": "http://christina04.hatenablog.com/entry/2017/01/06/190000",
+                    "title": "Golangでのstreamの扱い方を学ぶ - Carpe Diem",
+                    "eid": "315078306"
+                },
+                "timestamp": 1514269677,
+                "comment": "[Go][golang]"
+            }
+        ],
+        "meta": {
+            "status": 200,
+            "query": {
+                "original": "golang",
+                "queries": [ "golang" ]
+            },
+            "total": 59,
+            "elapsed": 5.579
+        }
+    }`
+    it('decode', () => {
+        const bookmarks = Bookmarks.fromJSON(json, (e: Error | undefined) => {
+            if (e) throw e
+        })
+        console.log(bookmarks)
+    })
+});

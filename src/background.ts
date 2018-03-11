@@ -1,7 +1,7 @@
 // XXX /runtime は何が違う？
 import Handlebars = require('handlebars');
 import Axios, { AxiosResponse, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Bookmarks, isValidBookmarks } from './types/bookmarks'
+import { Bookmarks } from './types/bookmarks'
 import { MyName, isValidMyName } from './types/my_name'
 import { p, j, pj } from './utils'
 import queryString = require('query-string')
