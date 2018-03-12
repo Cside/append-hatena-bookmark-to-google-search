@@ -1,4 +1,4 @@
-const Debug = true
+let Debug = true
 
 export const p = (...stuffs: any[]) => {
     if (Debug) console.debug(...stuffs)

@@ -6,7 +6,7 @@ import { MyName } from './types/my_name'
 import { p, j, pj } from './utils/log'
 import createAxios from './utils/axios'
 
-type Req = { q: string }
+type Req = { q: string[] }
 
 (() => {
     const template = `
@@ -33,8 +33,8 @@ type Req = { q: string }
     }).then(name => {
         // TODO: cb にどんな型でも入れちゃえる気がする ...
         chrome.runtime.onMessage.addListener((req: Req, sender, cb: (string) => void) => {
-            // /my/search でも出来るんだけど、302 redirect に 2 sec くらいかかるので id 指定 ...
-            createAxios().get(`http://b.hatena.ne.jp/${name}/search/json`, { params: { q: req.q, limit: 5 } }).then((res: AxiosResponse) => {
+            // /my/search でも出来るんだけど、302 redirect に 2 sec くらい持ってかれるので id 指定 ...
+            createAxios().get(`http://b.hatena.ne.jp/${name}/search/json`, { params: { q: req.q.join(' '), limit: 5 } }).then((res: AxiosResponse) => {
                 const b = Bookmarks.fromObject(res.data, e => {
                     if (e) {
                         console.error(e)
