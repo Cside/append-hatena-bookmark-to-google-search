@@ -2,9 +2,9 @@
 import Handlebars = require('handlebars');
 import Axios, { AxiosResponse, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { Bookmarks } from './types/bookmarks'
-import { MyName, isValidMyName } from './types/my_name'
+import { MyName } from './types/my_name'
 import { p, j, pj } from './utils'
-import queryString = require('query-string')
+import createAxios from './utils/axios'
 
 type Req = { q: string }
 
@@ -23,40 +23,10 @@ type Req = { q: string }
     `;
     const compiledTemplate = Handlebars.compile(template);
 
-    // このへんは今質的な処理でないから外に切りだしたほうが良いかも
-    const axios = Axios.create({
-        withCredentials: true,
-        responseType: 'json',
-        timeout: 20000,
-    })
-    const setLogger = (axios: AxiosInstance): AxiosInstance => {
-        const url = (conf): string => {
-            const query = queryString.stringify(conf.params)
-            // conf.url に queryString が含まれる場合死ぬ ...
-            return conf.url + (query ? '?' + query : '')
-        }
-
-        var start: number
-        axios.interceptors.request.use((conf: AxiosRequestConfig) => {
-            start = new Date().getTime();
-
-            const method = conf.method ? conf.method.toUpperCase() + ' ' : ''
-            p(`--> ${method}${url(conf)}`)
-
-            return conf
-        })
-        axios.interceptors.response.use((res: AxiosResponse) => {
-            const elapsedSec = (new Date().getTime() - start) / 1000
-            p(`<-- ${res.status} ${url(res.config)} (${elapsedSec}s)`)
-            return res
-        })
-        return axios
-    }
-
     // setlogger ダサい...
-    setLogger(axios).get('http://b.hatena.ne.jp/my.name').then((res: AxiosResponse) => {
+    createAxios().get('http://b.hatena.ne.jp/my.name').then((res: AxiosResponse) => {
         const data = res.data as MyName
-        if (!isValidMyName(data))
+        if (!MyName.isValid(data))
             throw new Error(`invalid response.data: ${JSON.stringify(data)}`)
         return data.name
 
@@ -64,14 +34,13 @@ type Req = { q: string }
         // TODO: cb にどんな型でも入れちゃえる気がする ...
         chrome.runtime.onMessage.addListener((req: Req, sender, cb: (string) => void) => {
             // /my/search でも出来るんだけど、302 redirect に 2 sec くらいかかるので id 指定 ...
-            axios.get(`http://b.hatena.ne.jp/${name}/search/json`, { params: { q: req.q, limit: 5 } }).then((res: AxiosResponse) => {
+            createAxios().get(`http://b.hatena.ne.jp/${name}/search/json`, { params: { q: req.q, limit: 5 } }).then((res: AxiosResponse) => {
                 const b = Bookmarks.fromObject(res.data, e => {
                     if (e) {
                         console.error(e)
                         throw e // TODO...
                     }
                 })
-                console.log(b)
                 cb(compiledTemplate(b))
             }).catch(e => {
                 console.error(e)
