@@ -1,4 +1,4 @@
-import { Bookmarks } from './bookmarks'
+import { Bookmarks, Entry } from './bookmarks'
 import { assert } from 'chai'
 
 describe('isValid', () => {
@@ -98,5 +98,26 @@ describe('fromJSON', () => {
         } else {
             // TODO: fail...
         }
+    })
+})
+
+describe('bookmark_url', () => {
+    [
+        {
+            name: 'http',
+            url: 'http://cside.me/foo/bar?id=100',
+            want: 'http://b.hatena.ne.jp/entry/cside.me/foo/bar?id=100',
+        },
+        {
+            name: 'https',
+            url: 'https://cside.me/foo/bar?id=100',
+            want: 'http://b.hatena.ne.jp/entry/s/cside.me/foo/bar?id=100',
+        },
+    ].forEach(tt => {
+        const entry = new Entry()
+        entry.url = tt.url
+        it('is automatically set', () => {
+            assert.equal(entry.bookmark_url, tt.want)
+        })
     })
 })

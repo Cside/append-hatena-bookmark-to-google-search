@@ -40,7 +40,7 @@ export class Bookmarks {
     }
 }
 
-class Bookmark {
+export class Bookmark {
     comment: string
 
     @Type(() => Entry)
@@ -56,7 +56,7 @@ class Bookmark {
     }
 }
 
-class Entry {
+export class Entry {
     snippet: string
     title: string
     eid: string
@@ -90,6 +90,6 @@ class Entry {
     }
 }
 
-class Meta {
+export class Meta {
     total: number
 }
