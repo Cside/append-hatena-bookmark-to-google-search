@@ -6,21 +6,28 @@ import { MyName } from './types/my_name'
 import { p, j, pj } from './utils/log'
 import createAxios from './utils/axios'
 
-type Req = { q: string[] }
-
-(() => {
-    const template = `
+const template = `
     <h2>はてなブックマークの検索結果 ({{meta.total}}件)</h2>
     {{#each bookmarks}}
         <div>
-            <h3><a href="{{entry.url}}">{{entry.title}}</a></h3>
-            <p>{{timestamp}} {{comment}}</p>
+            <h3>
+                <span><img src="{{entry.favicon_url}}" /></span>
+                <span><a href="{{entry.url}}">{{entry.title}}</a></span>
+            </h3>
+            <p>
+                <span><a href="{{entry.bookmark_url}}">{{entry.count_int}} users</a></span>
+                <span>{{created_ymd}}</span>
+                <span>{{comment}}</span>
+            </p>
             <blockquote>
                 {{entry.snippet}}
             </blockquote>
         </div>
-    {{/each}}
-    `;
+    {{/each}}`;
+
+type Req = { q: string[] }
+
+(() => {
     const compiledTemplate = Handlebars.compile(template);
 
     // setlogger ダサい...
