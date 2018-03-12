@@ -11,14 +11,7 @@ export class Bookmarks {
     meta: Meta
 
     // Bookmarks? だと怒られるの何故 ...。もしかして引数じゃないと使えないの？
-    static fromJSON(json: string, cb: (Error?) => void): Bookmarks | undefined {
-        let obj: Object
-        try {
-            obj = JSON.parse(json)
-        } catch (e) {
-            cb(new Error(`JSON parse error. Error: ${e}, JSON: ${json}`))
-            return
-        }
+    static fromObject(obj: Object, cb: (Error?) => void): Bookmarks | undefined {
         const bookmarks = plainToClass(Bookmarks, obj)
         if (!Bookmarks.isValid(bookmarks)) {
             cb(new Error(`Invalid bookmarks.`))

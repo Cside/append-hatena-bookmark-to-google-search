@@ -5,37 +5,37 @@ describe('isValid', () => {
     [
         {
             name: "bookmarks is empty",
-            input: `{ "bookmarks": [] }`,
+            input: { "bookmarks": [] },
             wantErr: false,
         },
         {
             name: "doesn't have bookmarks prop",
-            input: `{}`,
+            input: {},
             wantErr: true,
         },
         {
             name: "bookmarks[0].bookmark is null",
-            input: `{ "bookmarks": [null] }`,
+            input: { "bookmarks": [null] },
             wantErr: true,
         },
         {
             name: "bookmarks[0].bookmark has entry",
-            input: `{ "bookmarks": [{ "entry": { "url": "" } }] }`,
+            input: { "bookmarks": [{ "entry": { "url": "" } }] },
             wantErr: false,
         },
         {
             name: "bookmarks[0].bookmark.url isn't a string",
-            input: `{ "bookmarks": [{ "entry": {} }] }`,
+            input: { "bookmarks": [{ "entry": {} }] },
             wantErr: true,
         },
         {
             name: "has meta",
-            input: `{ "bookmarks": [], "meta": { "total": 100 } }`,
+            input: { "bookmarks": [], "meta": { "total": 100 } },
             wantErr: false,
         },
     ].forEach(tt => {
         it(tt.name, () => {
-            const b = Bookmarks.fromJSON(tt.input, (e) => {
+            const b = Bookmarks.fromObject(tt.input, (e) => {
                 // TODO: なぜかこいつらが実行テストにカウントされない
                 if (tt.wantErr) {
                     assert.isOk(e)
@@ -52,8 +52,8 @@ describe('isValid', () => {
     })
 })
 
-describe('fromJSON', () => {
-    const json = `{
+describe('fromObject', () => {
+    const obj = {
         "bookmarks": [
             {
                 "is_private": 0,
@@ -73,14 +73,14 @@ describe('fromJSON', () => {
             "status": 200,
             "query": {
                 "original": "golang",
-                "queries": [ "golang" ]
+                "queries": ["golang"]
             },
             "total": 59,
             "elapsed": 5.579
         }
-    }`
-    it('can parse', () => {
-        const bookmarks = Bookmarks.fromJSON(json, (e) => {
+    }
+    it('can transform class', () => {
+        const bookmarks = Bookmarks.fromObject(obj, (e) => {
             if (e) console.error(`[ERROR] ${e}`)
         })
         if (bookmarks) {
@@ -116,7 +116,7 @@ describe('bookmark_url', () => {
     ].forEach(tt => {
         const entry = new Entry()
         entry.url = tt.url
-        it('is automatically set', () => {
+        it(' automatically set', () => {
             assert.equal(entry.bookmark_url, tt.want)
         })
     })
