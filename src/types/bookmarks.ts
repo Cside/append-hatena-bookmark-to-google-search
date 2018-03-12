@@ -56,6 +56,7 @@ export class Bookmark {
     }
 }
 
+// TODO: export しなくても Boookmark.Entry みたいに参照できれば良い気がする
 export class Entry {
     snippet: string
     title: string
