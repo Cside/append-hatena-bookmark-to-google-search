@@ -2,11 +2,11 @@ import queryString = require('query-string')
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { p } from './log'
 
-const axios = Axios.create({
+const config: AxiosRequestConfig = {
     withCredentials: true,
     responseType: 'json',
     timeout: 20000, // TODO: タイムアウトのときにどういう画面出るか確認
-})
+}
 
 const url = (conf: AxiosRequestConfig): string => {
     const query = queryString.stringify(conf.params)
@@ -15,6 +15,8 @@ const url = (conf: AxiosRequestConfig): string => {
 }
 
 const createAxios = (): AxiosInstance => {
+    const axios: AxiosInstance = Axios.create(config)
+
     // AxiosRequestConfig に ↓ をどうにかして埋め込めたらもっとシンプルにできるんだけど...
     var start: number
     axios.interceptors.request.use(conf => {
@@ -33,4 +35,4 @@ const createAxios = (): AxiosInstance => {
     return axios
 }
 
-export default createAxios
+export default createAxios 
