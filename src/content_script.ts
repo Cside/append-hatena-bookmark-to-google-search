@@ -6,14 +6,13 @@ import { p, j } from './utils/log'
     if (!q) return
 
     const sideBlock = document.querySelector('#rhs_block')
-    if (!sideBlock) return
-    // TODO: 消すまでもない。下に追いやるとかで良いのでは。
-    //       てか、ブクマ検索結果を受け取ってからいじるべき。
-    while (sideBlock.firstChild) {
-        sideBlock.removeChild(sideBlock.firstChild)
-    }
+    if (!sideBlock)
+        throw new Error("Sidebar (#rhs_block) is not found.")
 
     chrome.runtime.sendMessage({ q }, (html: string) => {
+        while (sideBlock.firstChild) {
+            sideBlock.removeChild(sideBlock.firstChild)
+        }
         sideBlock.innerHTML = html
     })
 })()
