@@ -72,8 +72,8 @@ describe('fromObject', () => {
         "meta": {
             "status": 200,
             "query": {
-                "original": "golang",
-                "queries": ["golang"]
+                "original": "golang go",
+                "queries": ["golang", "go"]
             },
             "total": 59,
             "elapsed": 5.579
@@ -84,8 +84,8 @@ describe('fromObject', () => {
             if (e) console.error(`[ERROR] ${e}`)
         })
         if (bookmarks) {
+            // TODO: ちゃんとやるなら JSON 全体とまるっと比較すれば良い気がする
             assert.equal(bookmarks.bookmarks[0].created_ymd, "2017/12/26")
-            assert.equal(bookmarks.meta.total, 59)
             assert.equal(bookmarks.bookmarks[0].entry.count_int, 35)
             assert.equal(
                 bookmarks.bookmarks[0].entry.favicon_url,
@@ -95,6 +95,8 @@ describe('fromObject', () => {
                 bookmarks.bookmarks[0].entry.bookmark_url,
                 'http://b.hatena.ne.jp/entry/christina04.hatenablog.com/entry/2017/01/06/190000',
             )
+            assert.equal(bookmarks.meta.total, 59)
+            assert.deepEqual(bookmarks.meta.query.queries, ['golang', 'go'])
         } else {
             // TODO: fail...
         }

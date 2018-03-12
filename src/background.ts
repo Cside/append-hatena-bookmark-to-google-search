@@ -32,16 +32,23 @@ type Req = { q: string[] }
 
     }).then(name => {
         // TODO: cb にどんな型でも入れちゃえる気がする ...
+        // TODO: 検索を実行して速攻で window 閉じたらエラーになるっぽい（接続先の window がなくなってるからかな）
         chrome.runtime.onMessage.addListener((req: Req, sender, cb: (string) => void) => {
             // /my/search でも出来るんだけど、302 redirect に 2 sec くらい持ってかれるので id 指定 ...
             createAxios().get(`http://b.hatena.ne.jp/${name}/search/json`, { params: { q: req.q.join(' '), limit: 5 } }).then((res: AxiosResponse) => {
-                const b = Bookmarks.fromObject(res.data, e => {
+                const b: Bookmarks | undefined = Bookmarks.fromObject(res.data, e => {
                     if (e) {
                         console.error(e)
                         throw e // TODO...
                     }
                 })
+                if (!b) {
+                    cb('') // TODO ...
+                    return
+                }
+                p(`queries: ${JSON.stringify(b.meta.query.queries)}`)
                 cb(compiledTemplate(b))
+
             }).catch(e => {
                 console.error(e)
                 cb(String(e)) // TODO: Error handling

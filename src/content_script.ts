@@ -14,7 +14,6 @@ import { p, j } from './utils/log'
     }
 
     chrome.runtime.sendMessage({ q }, (html: string) => {
-        p(html)
         sideBlock.innerHTML = html
     })
 })()

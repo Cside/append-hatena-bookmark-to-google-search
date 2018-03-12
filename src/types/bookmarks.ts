@@ -4,11 +4,15 @@ import { sprintf } from 'sprintf-js'
 import { p, pj } from '../utils/log'
 
 export class Bookmarks {
-    @Type(() => Bookmark)
+    @Type(() => Bookmark) // TODO: 本当にこれ無いと動かんのか？
     bookmarks: Bookmark[]
 
-    @Type(() => Bookmark)
-    meta: Meta
+    meta: {
+        total: number,
+        query: {
+            queries: string[],
+        }
+    }
 
     // Bookmarks? だと怒られるの何故 ...。もしかして引数じゃないと使えないの？
     static fromObject(obj: Object, cb: (Error?) => void): Bookmarks | undefined {
@@ -41,7 +45,6 @@ export class Bookmark {
 
     private _timestamp: number
     created_ymd: string
-    get timestamp(): number { return this._timestamp }
     set timestamp(ts: number) {
         this._timestamp = ts
         const d = new Date(ts * 1000)
@@ -57,7 +60,6 @@ export class Entry {
 
     private _count: string
     count_int: number
-    get count(): string { return this._count }
     set count(count: string) {
         this._count = count
         this.count_int = Number(count)
@@ -82,8 +84,4 @@ export class Entry {
             this.bookmark_url = bookmark_url + suffix
         }
     }
-}
-
-export class Meta {
-    total: number
 }
