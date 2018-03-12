@@ -1,7 +1,7 @@
 import { Type, plainToClass } from "class-transformer";
 import 'reflect-metadata'
 import { sprintf } from 'sprintf-js'
-import { p, pj } from '../utils'
+import { p, pj } from '../utils/log'
 
 export class Bookmarks {
     @Type(() => Bookmark)

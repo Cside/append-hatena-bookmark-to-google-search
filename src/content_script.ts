@@ -1,4 +1,5 @@
-import { p, j, getQ } from './utils'
+import { getQ } from './utils'
+import { p, j } from './utils/log'
 
 (() => {
     const q = getQ(location.href) // space で分割とかはやってない ...

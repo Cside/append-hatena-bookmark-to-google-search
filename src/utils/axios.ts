@@ -1,6 +1,6 @@
 import queryString = require('query-string')
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { p } from '../utils'
+import { p } from './log'
 
 const axios = Axios.create({
     withCredentials: true,

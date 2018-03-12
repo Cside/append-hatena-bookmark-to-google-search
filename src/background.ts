@@ -3,7 +3,7 @@ import Handlebars = require('handlebars');
 import Axios, { AxiosResponse, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { Bookmarks } from './types/bookmarks'
 import { MyName } from './types/my_name'
-import { p, j, pj } from './utils'
+import { p, j, pj } from './utils/log'
 import createAxios from './utils/axios'
 
 type Req = { q: string }
