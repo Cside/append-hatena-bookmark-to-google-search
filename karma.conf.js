@@ -3,12 +3,15 @@
 
 var webpackConfig = require('./webpack.config.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
         // いる？
         basePath: '',
         browsers: ['ChromeHeadless'],
-        frameworks: ['mocha', 'chai'],
+        frameworks: [
+            'mocha',
+            'chai',
+        ],
         files: ['src/**/*_test.ts'],
         // いる？
         webpack: {
@@ -24,18 +27,23 @@ module.exports = function(config) {
                 colors: true
             }
         },
+        // 何これ、すごい冗長じゃね。。。
         plugins: [
             'karma-webpack',
             'karma-mocha',
             'karma-chai',
             'karma-chrome-launcher',
+            'karma-notify-reporter',
         ],
         preprocessors: {
             'src/**/*_test.ts': ['webpack']
         },
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        reporters: ['progress'],
+        reporters: [
+            'progress',
+            'notify',
+        ],
         port: 9876,
         colors: true,
         singleRun: false,
