@@ -8,10 +8,12 @@ const config: AxiosRequestConfig = {
     timeout: 20000, // TODO: タイムアウトのときにどういう画面出るか確認
 }
 
-const url = (conf: AxiosRequestConfig): string => {
-    const query = queryString.stringify(conf.params)
-    // TODO: conf.url に queryString が含まれる場合死ぬ ... まぁ今はとりあえずいいか ...
-    return conf.url + (query ? '?' + query : '')
+export const url = (conf: AxiosRequestConfig): string => {
+    const url = conf.url ? conf.url : ""
+    const parsed = queryString.parseUrl(url).query
+
+    Object.assign(parsed, conf.params ? conf.params : {})
+    return url.replace(/^(.+\?).+$/, `$1${queryString.stringify(parsed)}`)
 }
 
 const createAxios = (): AxiosInstance => {
