@@ -7,6 +7,7 @@ import { MyName } from './types/my_name'
 import { p, j, pj } from './utils/log'
 import createAxios from './utils/axios'
 
+// HTML Renderer 的なクラスでやらせたほうが良いかも
 const template = `
     <h2 class="hb-h2">はてなブックマークの検索結果 ({{meta.total}}件)</h2>
     {{#each bookmarks}}
@@ -21,7 +22,7 @@ const template = `
                 <span class="">{{comment}}</span>
             </p>
             <blockquote class="hb-snippet">
-                {{entry.snippet}}
+                {{{entry.snippet}}}
             </blockquote>
         </div>
     {{/each}}
@@ -44,8 +45,13 @@ const template = `
         .hb-date,
         .hb-snippet {
             color: #999;
+        }
+        .hb-snippet {
             -webkit-margin-start: 0px;
             -webkit-margin-end: 0px;
+        }
+        .hb-snippet strong {
+            color: #333;
         }
     </style>
 `;
