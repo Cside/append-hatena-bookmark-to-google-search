@@ -100,6 +100,10 @@ describe('fromObject', () => {
                 bookmarks.bookmarks[0].entry.bookmark_url,
                 'http://b.hatena.ne.jp/entry/christina04.hatenablog.com/entry/2017/01/06/190000',
             )
+            assert.equal(
+                bookmarks.bookmarks[0].entry.hostname,
+                'christina04.hatenablog.com',
+            )
             assert.equal(bookmarks.meta.total, 59)
             assert.deepEqual(bookmarks.meta.query.queries, ['golang', 'go'])
         } else {
