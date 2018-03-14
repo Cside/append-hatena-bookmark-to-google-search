@@ -23,6 +23,7 @@ export class Bookmarks {
             cb(new Error(`Invalid bookmarks.`))
             return
         }
+        bookmarks.emphasisQueries()
         return bookmarks
     }
 
@@ -36,6 +37,16 @@ export class Bookmarks {
                 )
             )
         )
+    }
+
+    // TODO: これ明示的に呼び出すしかな無いのかな。できればインスタンス作る時に強制したいんだけど... 。
+    emphasisQueries() {
+        this.meta.query.queries.forEach(query => {
+            const re = new RegExp(`(${query})`, 'gi')
+            this.bookmarks.forEach(bookmark => {
+                bookmark.entry.snippet = bookmark.entry.snippet.replace(re, `<strong>$1</strong>`)
+            })
+        })
     }
 }
 

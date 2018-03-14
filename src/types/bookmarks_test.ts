@@ -1,11 +1,15 @@
 import { Bookmarks, Entry } from './bookmarks'
+import { plainToClass } from "class-transformer";
 import { assert } from 'chai'
 
 describe('isValid', () => {
     [
         {
             name: "bookmarks is empty",
-            input: { "bookmarks": [] },
+            input: {
+                "bookmarks": [],
+                meta: {},
+            },
             wantErr: false,
         },
         {
@@ -28,12 +32,13 @@ describe('isValid', () => {
             input: { "bookmarks": [{ "entry": {} }] },
             wantErr: true,
         },
-        {
-            name: "has meta",
-            input: { "bookmarks": [], "meta": { "total": 100 } },
-            wantErr: false,
-        },
     ].forEach(tt => {
+        tt.input.meta = {
+            total: 100,
+            query: {
+                queries: [],
+            }
+        }
         it(tt.name, () => {
             const b = Bookmarks.fromObject(tt.input, (e) => {
                 // TODO: なぜかこいつらが実行テストにカウントされない
@@ -120,6 +125,55 @@ describe('bookmark_url', () => {
         entry.url = tt.url
         it(' automatically set', () => {
             assert.equal(entry.bookmark_url, tt.want)
+        })
+    })
+})
+
+describe('emphasisQueries', () => {
+    [
+        {
+            args: {
+                snippet: 'Golang',
+                queries: ['Go'],
+            },
+            want: '<strong>Go</strong>lang',
+        },
+        {
+            args: {
+                snippet: '仕事でGo言語書きたい',
+                queries: ['Go'],
+            },
+            want: '仕事で<strong>Go</strong>言語書きたい',
+        },
+        {
+            args: {
+                snippet: 'GoGo',
+                queries: ['Go'],
+            },
+            want: '<strong>Go</strong><strong>Go</strong>',
+        },
+    ].forEach(tt => {
+        it(`can surround "${tt.args.snippet}"`, () => {
+            const b = Bookmarks.fromObject({
+                bookmarks: [
+                    {
+                        entry: {
+                            url: '',
+                            snippet: tt.args.snippet,
+                        },
+                    },
+                ],
+                meta: {
+                    query: {
+                        queries: tt.args.queries,
+                    },
+                },
+            }, (e => { console.error(e) }))
+            if (b) {
+                assert.equal(b.bookmarks[0].entry.snippet, tt.want)
+            } else {
+                // TODO: fail ...
+            }
         })
     })
 })
