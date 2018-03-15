@@ -31,7 +31,7 @@ describe('isValid', () => {
             input: { bookmarks: [{ entry: {} }] },
             wantErr: true,
         },
-    ].forEach(tt => {
+    ].forEach((tt) => {
         tt.input.meta = {
             total: 100,
             query: {
@@ -123,7 +123,7 @@ describe('bookmark_url', () => {
             url: 'https://cside.me/foo/bar?id=100',
             want: 'http://b.hatena.ne.jp/entry/s/cside.me/foo/bar?id=100',
         },
-    ].forEach(tt => {
+    ].forEach((tt) => {
         const entry = new Entry()
         entry.url = tt.url
         it(' automatically set', () => {
@@ -155,7 +155,7 @@ describe('emphasisQueries', () => {
             },
             want: '<strong>Go</strong><strong>Go</strong>',
         },
-    ].forEach(tt => {
+    ].forEach((tt) => {
         it(`can surround "${tt.args.snippet}"`, () => {
             const b = Bookmarks.fromObject({
                 bookmarks: [
@@ -171,7 +171,7 @@ describe('emphasisQueries', () => {
                         queries: tt.args.queries,
                     },
                 },
-            }, (e => { console.error(e) }))
+            }, ((e) => { console.error(e) }))
             if (b) {
                 assert.equal(b.bookmarks[0].entry.snippet, tt.want)
             } else {

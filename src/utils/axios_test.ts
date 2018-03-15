@@ -36,7 +36,7 @@ describe('url', () => {
             },
             want: `${baseUrl}#hash?bar=Bar&baz=Baz&foo=Foo`,
         },
-    ].forEach(tt => {
+    ].forEach((tt) => {
         it(tt.name, () => {
             assert.equal(url(tt.conf), tt.want)
         })

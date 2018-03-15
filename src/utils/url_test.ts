@@ -53,7 +53,7 @@ describe('getQ', () => {
             url: 'https://www.google.co.jp/search?safe=off&ei=wVumWoa3HMic0gS0lbaABQ&q=foo%E3%80%80bar&oq=foo%E3%80%80bar&gs_l=psy-ab.3..35i39k1l2j0l4j0i203k1l2.109967.123648.0.123829.20.12.8.0.0.0.331.1544.0j5j2j1.9.0....0...1c.1.64.psy-ab..4.16.1427.6..0i131k1j0i67k1j0i4k1.138.8h0tVgelWSo',
             want: ['foo', 'bar'],
         },
-    ].forEach(tt => {
+    ].forEach((tt) => {
         it(tt.name, () => {
             assert.deepEqual(getQ(tt.url), tt.want)
         })

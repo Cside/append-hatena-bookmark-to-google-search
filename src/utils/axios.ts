@@ -22,7 +22,7 @@ const createAxios = (): AxiosInstance => {
 
     // AxiosRequestConfig に ↓ をどうにかして埋め込めたらもっとシンプルにできるんだけど...
     var start: number
-    axios.interceptors.request.use(conf => {
+    axios.interceptors.request.use((conf) => {
         start = new Date().getTime()
 
         const method = conf.method ? conf.method.toUpperCase() + ' ' : ''

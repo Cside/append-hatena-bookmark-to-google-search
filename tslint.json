@@ -62,6 +62,8 @@
             "check-typecast",
             "check-type-operator",
             "check-preblock"
-        ]
+        ],
+        "callable-types": true,
+        "arrow-parens": true
     }
 }
