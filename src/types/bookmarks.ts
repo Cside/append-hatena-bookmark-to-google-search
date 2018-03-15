@@ -1,4 +1,4 @@
-import { Type, plainToClass } from "class-transformer";
+import { Type, plainToClass } from "class-transformer"
 import 'reflect-metadata'
 import { sprintf } from 'sprintf-js'
 
@@ -78,8 +78,8 @@ export class Entry {
     set url(url: string) {
         this._url = url
 
-        const loc = document.createElement('a');
-        loc.href = url;
+        const loc = document.createElement('a')
+        loc.href = url
 
         const scheme = loc.protocol
         const baseUrl = `${scheme}//${loc.hostname}/`

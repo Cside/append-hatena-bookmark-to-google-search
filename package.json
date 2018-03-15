@@ -41,6 +41,7 @@
     "sprintf-js": "^1.1.1",
     "ts-loader": "^3.5.0",
     "tslint": "^5.9.1",
+    "tslint-loader": "^3.6.0",
     "typescript": ">=2.7.1 <2.8.0",
     "webpack": "~3.7.0"
   }

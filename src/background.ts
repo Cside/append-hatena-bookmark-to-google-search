@@ -1,6 +1,6 @@
 // XXX /runtime は何が違う？
-import Handlebars = require('handlebars');
-import { AxiosResponse } from 'axios';
+import Handlebars = require('handlebars')
+import { AxiosResponse } from 'axios'
 import { Bookmarks } from './types/bookmarks'
 import { MyName } from './types/my_name'
 import { p } from './utils/log'
@@ -91,13 +91,13 @@ const template = `
             color: #333;
         }
     </style>
-`;
+`
 
 const Cache = true // for development
 type Req = { q: string[] }
 
 (() => {
-    const compiledTemplate = Handlebars.compile(template);
+    const compiledTemplate = Handlebars.compile(template)
 
     // setlogger ダサい...
     createAxios().get('http://b.hatena.ne.jp/my.name').then((res: AxiosResponse) => {
@@ -146,5 +146,5 @@ type Req = { q: string[] }
     }).catch(e => {
         // TODO: Error Handling
         console.error(e)
-    });
+    })
 })()

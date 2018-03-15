@@ -1,6 +1,6 @@
 // TODO: 21 世紀なので URLSearchParams を使うべし
 import queryString = require('query-string')
-import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { p } from './log'
 
 const config: AxiosRequestConfig = {
@@ -23,7 +23,7 @@ const createAxios = (): AxiosInstance => {
     // AxiosRequestConfig に ↓ をどうにかして埋め込めたらもっとシンプルにできるんだけど...
     var start: number
     axios.interceptors.request.use(conf => {
-        start = new Date().getTime();
+        start = new Date().getTime()
 
         const method = conf.method ? conf.method.toUpperCase() + ' ' : ''
         p(`--> ${method}${url(conf)}`)

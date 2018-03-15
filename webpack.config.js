@@ -13,16 +13,26 @@ module.exports = {
     },
     module: {
         loaders: [{
-            exclude: /node_modules/,
-            test: /\.tsx?$/,
-            loader: 'ts-loader'
-        }]
+                enforce: 'pre',
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                loader: 'tslint-loader',
+                options: {
+                    fix: true,
+                }
+            },
+            {
+                exclude: /node_modules/,
+                test: /\.tsx?$/,
+                loader: 'ts-loader'
+            },
+        ]
     },
     plugins: [
 
         // pack common vender files
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor', 
+            name: 'vendor',
             minChunks: Infinity
         }),
 
@@ -38,7 +48,7 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
         alias: {
-           handlebars: 'handlebars/dist/handlebars.min.js',
+            handlebars: 'handlebars/dist/handlebars.min.js',
         },
     },
 };
