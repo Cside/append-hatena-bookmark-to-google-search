@@ -1,5 +1,5 @@
-import { Bookmarks, Entry } from './bookmarks'
 import { assert } from 'chai'
+import { Bookmarks, Entry } from './bookmarks'
 
 describe('isValid', () => {
     [

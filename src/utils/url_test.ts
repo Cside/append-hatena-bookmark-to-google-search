@@ -1,5 +1,5 @@
-import { getQ } from './url'
 import { assert } from 'chai'
+import { getQ } from './url'
 
 describe('getQ', () => {
     [

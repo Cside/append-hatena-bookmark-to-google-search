@@ -1,5 +1,5 @@
-import { url } from './axios'
 import { assert } from 'chai'
+import { url } from './axios'
 
 describe('url', () => {
     const baseUrl = 'https://cside.me/foo'; // TODO: semi colon ...

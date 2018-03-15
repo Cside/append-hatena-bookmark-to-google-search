@@ -1,4 +1,4 @@
-import { Type, plainToClass } from "class-transformer"
+import { plainToClass, Type } from "class-transformer"
 import 'reflect-metadata'
 import { sprintf } from 'sprintf-js'
 

@@ -1,6 +1,6 @@
 // TODO: 21 世紀なので URLSearchParams を使うべし
-import queryString = require('query-string')
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import queryString = require('query-string')
 import { p } from './log'
 
 const config: AxiosRequestConfig = {
