@@ -4,6 +4,13 @@
             true,
             "never"
         ],
-        "no-unused-expression": true
+        "no-unused-expression": true,
+        "align": [
+            true,
+            "elements",
+            "members",
+            "parameters",
+            "statements"
+        ]
     }
 }
