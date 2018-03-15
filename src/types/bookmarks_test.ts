@@ -6,7 +6,7 @@ describe('isValid', () => {
         {
             name: "bookmarks is empty",
             input: {
-                "bookmarks": [],
+                bookmarks: [],
                 meta: {},
             },
             wantErr: false,
@@ -18,17 +18,17 @@ describe('isValid', () => {
         },
         {
             name: "bookmarks[0].bookmark is null",
-            input: { "bookmarks": [null] },
+            input: { bookmarks: [null] },
             wantErr: true,
         },
         {
             name: "bookmarks[0].bookmark has entry",
-            input: { "bookmarks": [{ "entry": { "url": "" } }] },
+            input: { bookmarks: [{ entry: { url: "" } }] },
             wantErr: false,
         },
         {
             name: "bookmarks[0].bookmark.url isn't a string",
-            input: { "bookmarks": [{ "entry": {} }] },
+            input: { bookmarks: [{ entry: {} }] },
             wantErr: true,
         },
     ].forEach(tt => {
@@ -58,29 +58,29 @@ describe('isValid', () => {
 
 describe('fromObject', () => {
     const obj = {
-        "bookmarks": [
+        bookmarks: [
             {
-                "is_private": 0,
-                "entry": {
-                    "snippet": "This is snippet",
-                    "count": "35",
-                    "score_vals": null,
-                    "url": "http://christina04.hatenablog.com/entry/2017/01/06/190000",
-                    "title": "Golangでのstreamの扱い方を学ぶ - Carpe Diem",
-                    "eid": "315078306"
+                is_private: 0,
+                entry: {
+                    snippet: "This is snippet",
+                    count: "35",
+                    score_vals: null,
+                    url: "http://christina04.hatenablog.com/entry/2017/01/06/190000",
+                    title: "Golangでのstreamの扱い方を学ぶ - Carpe Diem",
+                    eid: "315078306"
                 },
-                "timestamp": 1514269677,
-                "comment": "[Go][golang]"
+                timestamp: 1514269677,
+                comment: "[Go][golang]"
             }
         ],
-        "meta": {
-            "status": 200,
-            "query": {
-                "original": "golang go",
-                "queries": ["golang", "go"]
+        meta: {
+            status: 200,
+            query: {
+                original: "golang go",
+                queries: ["golang", "go"]
             },
-            "total": 59,
-            "elapsed": 5.579
+            total: 59,
+            elapsed: 5.579
         }
     }
     it('can transform class', () => {

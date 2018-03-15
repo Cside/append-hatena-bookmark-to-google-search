@@ -12,6 +12,22 @@
             "members",
             "parameters",
             "statements"
+        ],
+        "no-consecutive-blank-lines": true,
+        "no-boolean-literal-compare": true,
+        "no-unnecessary-initializer": true,
+        "no-unnecessary-qualifier": true,
+        "one-line": [
+            true,
+            "check-catch",
+            "check-finally",
+            "check-else",
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "object-literal-key-quotes": [
+            true,
+            "as-needed"
         ]
     }
 }
