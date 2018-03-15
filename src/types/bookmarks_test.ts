@@ -4,7 +4,7 @@ import { Bookmarks, Entry } from './bookmarks'
 describe('isValid', () => {
     [
         {
-            name: "bookmarks is empty",
+            name: 'bookmarks is empty',
             input: {
                 bookmarks: [],
                 meta: {},
@@ -12,22 +12,22 @@ describe('isValid', () => {
             wantErr: false,
         },
         {
-            name: "doesn't have bookmarks prop",
+            name: 'doesn\'t have bookmarks prop',
             input: {},
             wantErr: true,
         },
         {
-            name: "bookmarks[0].bookmark is null",
+            name: 'bookmarks[0].bookmark is null',
             input: { bookmarks: [null] },
             wantErr: true,
         },
         {
-            name: "bookmarks[0].bookmark has entry",
-            input: { bookmarks: [{ entry: { url: "" } }] },
+            name: 'bookmarks[0].bookmark has entry',
+            input: { bookmarks: [{ entry: { url: '' } }] },
             wantErr: false,
         },
         {
-            name: "bookmarks[0].bookmark.url isn't a string",
+            name: 'bookmarks[0].bookmark.url isn\'t a string',
             input: { bookmarks: [{ entry: {} }] },
             wantErr: true,
         },
@@ -62,22 +62,22 @@ describe('fromObject', () => {
             {
                 is_private: 0,
                 entry: {
-                    snippet: "This is snippet",
-                    count: "35",
+                    snippet: 'This is snippet',
+                    count: '35',
                     score_vals: null,
-                    url: "http://christina04.hatenablog.com/entry/2017/01/06/190000",
-                    title: "Golangでのstreamの扱い方を学ぶ - Carpe Diem",
-                    eid: "315078306"
+                    url: 'http://christina04.hatenablog.com/entry/2017/01/06/190000',
+                    title: 'Golangでのstreamの扱い方を学ぶ - Carpe Diem',
+                    eid: '315078306'
                 },
                 timestamp: 1514269677,
-                comment: "[Go][golang]"
+                comment: '[Go][golang]'
             }
         ],
         meta: {
             status: 200,
             query: {
-                original: "golang go",
-                queries: ["golang", "go"]
+                original: 'golang go',
+                queries: ['golang', 'go']
             },
             total: 59,
             elapsed: 5.579
@@ -89,7 +89,7 @@ describe('fromObject', () => {
         })
         if (bookmarks) {
             // TODO: ちゃんとやるなら JSON 全体とまるっと比較すれば良い気がする
-            assert.equal(bookmarks.bookmarks[0].created_ymd, "2017/12/26")
+            assert.equal(bookmarks.bookmarks[0].created_ymd, '2017/12/26')
             assert.equal(bookmarks.bookmarks[0].entry.count_int, 35)
             assert.equal(
                 bookmarks.bookmarks[0].entry.favicon_url,

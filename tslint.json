@@ -33,6 +33,11 @@
             true,
             "never"
         ],
-        "ordered-imports": true
+        "ordered-imports": true,
+        "prefer-method-signature": true,
+        "quotemark": [
+            true,
+            "single"
+        ]
     }
 }

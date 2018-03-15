@@ -10,7 +10,7 @@ const config: AxiosRequestConfig = {
 }
 
 export const url = (conf: AxiosRequestConfig): string => {
-    const url = conf.url ? conf.url : ""
+    const url = conf.url ? conf.url : ''
     const parsed = queryString.parseUrl(url).query
 
     Object.assign(parsed, conf.params ? conf.params : {})

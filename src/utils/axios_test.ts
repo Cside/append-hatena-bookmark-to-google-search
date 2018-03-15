@@ -5,7 +5,7 @@ describe('url', () => {
     const baseUrl = 'https://cside.me/foo'; // TODO: semi colon ...
     [
         {
-            name: "have no params",
+            name: 'have no params',
             conf: {
                 url: `${baseUrl}`,
                 params: {},
@@ -13,7 +13,7 @@ describe('url', () => {
             want: `${baseUrl}`,
         },
         {
-            name: "http",
+            name: 'http',
             conf: {
                 url: `http://cside.me/foo`,
                 params: {},
@@ -21,18 +21,18 @@ describe('url', () => {
             want: `http://cside.me/foo`,
         },
         {
-            name: "add new param",
+            name: 'add new param',
             conf: {
                 url: `${baseUrl}?foo=Foo&bar=Bar`,
-                params: { baz: "Baz" },
+                params: { baz: 'Baz' },
             },
             want: `${baseUrl}?bar=Bar&baz=Baz&foo=Foo`,
         },
         {
-            name: "has hash",
+            name: 'has hash',
             conf: {
                 url: `${baseUrl}#hash?foo=Foo&bar=Bar`,
-                params: { baz: "Baz" },
+                params: { baz: 'Baz' },
             },
             want: `${baseUrl}#hash?bar=Bar&baz=Baz&foo=Foo`,
         },
