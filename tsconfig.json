@@ -5,6 +5,7 @@
         "sourceMap": false,
         "rootDir": "src",
         "outDir": "dist/js",
+        "allowUnreachableCode": false,
         "strictPropertyInitialization": false,
         "noImplicitReturns": true,
         "noImplicitAny": false,
@@ -12,6 +13,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strict": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "pretty": true
     }
 }
