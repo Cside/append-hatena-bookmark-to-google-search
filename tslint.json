@@ -3,6 +3,7 @@
         "semicolon": [
             true,
             "never"
-        ]
+        ],
+        "no-unused-expression": true
     }
 }
