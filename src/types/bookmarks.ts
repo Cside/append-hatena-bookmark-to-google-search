@@ -12,7 +12,7 @@ export class Bookmarks {
     static itemsPerPage = 5
 
     // Bookmarks? だと怒られるの何故 ...。もしかして引数じゃないと使えないの？
-    static fromObject(obj: Object, cb: (Error?) => void): Bookmarks | undefined {
+    static fromObject(obj: Object, cb: (error?: Error) => void): Bookmarks | undefined {
         const bookmarks = plainToClass(Bookmarks, obj)
         if (!Bookmarks.isValid(bookmarks)) {
             cb(new Error(`Invalid bookmarks.`))

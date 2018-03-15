@@ -109,27 +109,24 @@ type Req = { q: string[] }
     }).then(name => {
         // TODO: cb にどんな型でも入れちゃえる気がする ...
         // TODO: 検索を実行して速攻で window 閉じたらエラーになるっぽい（接続先の window がなくなってるからかな）
-        chrome.runtime.onMessage.addListener((req: Req, _, cb: ({
-            html: string,
-            error: Error,
-        }) => void) => {
+        chrome.runtime.onMessage.addListener((
+            req: Req,
+            _,
+            cb: (args: { html?: string, error?: Error }) => void,
+        ) => {
             // /my/search でも出来るんだけど、302 redirect に 2 sec くらい持ってかれるので id 指定 ...
 
             const onSuccess = (res: AxiosResponse) => {
-
+                let error: Error | undefined
                 const b: Bookmarks | undefined = Bookmarks.fromObject(res.data, e => {
-                    if (e) {
-                        console.error(e)
-                        throw e // TODO...
-                    }
+                    if (e) error = e
                 })
-                if (!b) {
-                    cb({ html: '', error: null }) // TODO ...
+                if (!b || error) {
+                    cb({ error })
                     return
                 }
                 p(`queries: ${JSON.stringify(b.meta.query.queries)}`)
-                cb({ html: compiledTemplate(b), error: null })
-
+                cb({ html: compiledTemplate(b) })
             }
             const url = `http://b.hatena.ne.jp/${name}/search/json?q=${req.q.join(' ')}&limit=${Bookmarks.itemsPerPage}`
             if (Cache && localStorage[url]) {
@@ -140,7 +137,7 @@ type Req = { q: string[] }
                     return onSuccess(res)
                 }).catch(e => {
                     console.error(e)
-                    cb({ html: String(e), error: null }) // TODO: Error handling
+                    cb({ error: e })
                 })
             }
 

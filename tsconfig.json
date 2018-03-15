@@ -8,7 +8,6 @@
         "allowUnreachableCode": false,
         "strictPropertyInitialization": false,
         "noImplicitReturns": true,
-        "noImplicitAny": false,
         "noEmitOnError": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
