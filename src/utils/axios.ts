@@ -38,4 +38,4 @@ const createAxios = (): AxiosInstance => {
     return axios
 }
 
-export default createAxios 
+export default createAxios
