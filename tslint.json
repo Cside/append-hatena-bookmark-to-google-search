@@ -29,15 +29,39 @@
             true,
             "as-needed"
         ],
-        "object-literal-shorthand": [
+        "object-shorthand": [
             true,
-            "never"
+            "always"
         ],
         "ordered-imports": true,
         "prefer-method-signature": true,
         "quotemark": [
             true,
             "single"
+        ],
+        "space-before-function-paren": [
+            true,
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always",
+                "method": "never",
+                "constructor": "always"
+            }
+        ],
+        "space-within-parens": 0,
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-module",
+            "check-separator",
+            "check-rest-spread",
+            "check-type",
+            "check-typecast",
+            "check-type-operator",
+            "check-preblock"
         ]
     }
 }

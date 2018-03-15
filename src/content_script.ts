@@ -6,7 +6,7 @@ import { getQ } from './utils/url'
 
     const sideBlock = document.querySelector('#rhs_block')
     if (!sideBlock)
-        throw new Error("Sidebar (#rhs_block) is not found.")
+        throw new Error('Sidebar (#rhs_block) is not found.')
 
     chrome.runtime.sendMessage({ q }, (args: {
         html: string,

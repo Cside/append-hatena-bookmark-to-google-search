@@ -4,9 +4,9 @@
   "description": "chrome-extension-typescript-starter",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack",
-    "watch": "./node_modules/.bin/webpack -w",
-    "lint": "./node_modules/.bin/tslint src/background.ts"
+    "build": "$(npm bin)/webpack",
+    "watch": "$(npm bin)/webpack -w",
+    "lint": "$(npm bin)/tslint --fix `git ls-files src`"
   },
   "author": "",
   "license": "MIT",

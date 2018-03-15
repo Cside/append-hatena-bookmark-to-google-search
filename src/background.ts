@@ -1,10 +1,10 @@
 // XXX /runtime は何が違う？
-import Handlebars = require('handlebars')
 import { AxiosResponse } from 'axios'
+import Handlebars = require('handlebars')
 import { Bookmarks } from './types/bookmarks'
 import { MyName } from './types/my_name'
-import { p } from './utils/log'
 import createAxios from './utils/axios'
+import { p } from './utils/log'
 
 // TODO: どう見てもここでやることじゃないだろ ... 。
 // HTML Renderer 的なクラスでやらせたほうが良いかも
