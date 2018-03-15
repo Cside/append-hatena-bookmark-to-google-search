@@ -7,12 +7,8 @@ export class Bookmarks {
     @Type(() => Bookmark) // TODO: 本当にこれ無いと動かんのか？
     bookmarks: Bookmark[]
 
-    meta: {
-        total: number,
-        query: {
-            queries: string[],
-        }
-    }
+    @Type(() => Meta)
+    meta: Meta
 
     static itemsPerPage = 5
 
@@ -98,5 +94,12 @@ export class Entry {
         this.bookmark_url = 'http://b.hatena.ne.jp/entry/'
             + ((scheme === 'https:') ? 's/' : '')
             + url.replace(/https?:\/\//, '')
+    }
+}
+
+export class Meta {
+    total: number
+    query: {
+        queries: string[]
     }
 }

@@ -9,10 +9,17 @@ import { p, j } from './utils/log'
     if (!sideBlock)
         throw new Error("Sidebar (#rhs_block) is not found.")
 
-    chrome.runtime.sendMessage({ q }, (html: string) => {
+    chrome.runtime.sendMessage({ q }, (args: {
+        html: string,
+        error?: Error,
+    }) => {
+        if (args.error) {
+            sideBlock.innerHTML = args.html // TODO
+            return
+        }
         while (sideBlock.firstChild) {
             sideBlock.removeChild(sideBlock.firstChild)
         }
-        sideBlock.innerHTML = html
+        sideBlock.innerHTML = args.html
     })
 })()

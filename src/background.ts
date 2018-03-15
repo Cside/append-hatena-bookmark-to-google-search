@@ -110,7 +110,10 @@ type Req = { q: string[] }
     }).then(name => {
         // TODO: cb にどんな型でも入れちゃえる気がする ...
         // TODO: 検索を実行して速攻で window 閉じたらエラーになるっぽい（接続先の window がなくなってるからかな）
-        chrome.runtime.onMessage.addListener((req: Req, sender, cb: (string) => void) => {
+        chrome.runtime.onMessage.addListener((req: Req, sender, cb: ({
+            html: string,
+            error: Error,
+        }) => void) => {
             // /my/search でも出来るんだけど、302 redirect に 2 sec くらい持ってかれるので id 指定 ...
 
             const onSuccess = (res: AxiosResponse) => {
@@ -121,25 +124,23 @@ type Req = { q: string[] }
                     }
                 })
                 if (!b) {
-                    cb('') // TODO ...
+                    cb({ html: '', error: null }) // TODO ...
                     return
                 }
                 p(`queries: ${JSON.stringify(b.meta.query.queries)}`)
-                cb(compiledTemplate(b))
+                cb({ html: compiledTemplate(b), error: null })
 
             }
             const url = `http://b.hatena.ne.jp/${name}/search/json?q=${req.q.join(' ')}&limit=${Bookmarks.itemsPerPage}`
             if (Cache && localStorage[url]) {
-                p(`# get exists`)
                 onSuccess(JSON.parse(localStorage[url]))
             } else {
-                p(`# get doesn't exist`)
                 createAxios().get(url).then(res => {
                     if (Cache) localStorage[url] = JSON.stringify(res)
                     return onSuccess(res)
                 }).catch(e => {
                     console.error(e)
-                    cb(String(e)) // TODO: Error handling
+                    cb({ html: String(e), error: null }) // TODO: Error handling
                 })
             }
 
