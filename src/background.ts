@@ -109,7 +109,7 @@ type Req = { q: string[] }
     }).then(name => {
         // TODO: cb にどんな型でも入れちゃえる気がする ...
         // TODO: 検索を実行して速攻で window 閉じたらエラーになるっぽい（接続先の window がなくなってるからかな）
-        chrome.runtime.onMessage.addListener((req: Req, sender, cb: ({
+        chrome.runtime.onMessage.addListener((req: Req, _, cb: ({
             html: string,
             error: Error,
         }) => void) => {
