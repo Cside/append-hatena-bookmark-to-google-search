@@ -1,10 +1,9 @@
-import { Bookmark } from './types/bookmarks';
 // XXX /runtime は何が違う？
 import Handlebars = require('handlebars');
-import Axios, { AxiosResponse, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosResponse } from 'axios';
 import { Bookmarks } from './types/bookmarks'
 import { MyName } from './types/my_name'
-import { p, j, pj } from './utils/log'
+import { p } from './utils/log'
 import createAxios from './utils/axios'
 
 // TODO: どう見てもここでやることじゃないだろ ... 。
@@ -117,6 +116,7 @@ type Req = { q: string[] }
             // /my/search でも出来るんだけど、302 redirect に 2 sec くらい持ってかれるので id 指定 ...
 
             const onSuccess = (res: AxiosResponse) => {
+
                 const b: Bookmarks | undefined = Bookmarks.fromObject(res.data, e => {
                     if (e) {
                         console.error(e)

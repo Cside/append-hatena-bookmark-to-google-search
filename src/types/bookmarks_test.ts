@@ -1,5 +1,4 @@
 import { Bookmarks, Entry } from './bookmarks'
-import { plainToClass } from "class-transformer";
 import { assert } from 'chai'
 
 describe('isValid', () => {

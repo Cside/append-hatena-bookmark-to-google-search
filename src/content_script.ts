@@ -1,5 +1,4 @@
 import { getQ } from './utils/url'
-import { p, j } from './utils/log'
 
 (() => {
     const q = getQ(location.href)

@@ -1,7 +1,6 @@
 import { Type, plainToClass } from "class-transformer";
 import 'reflect-metadata'
 import { sprintf } from 'sprintf-js'
-import { p, pj } from '../utils/log'
 
 export class Bookmarks {
     @Type(() => Bookmark) // TODO: 本当にこれ無いと動かんのか？
@@ -52,10 +51,8 @@ export class Bookmark {
     @Type(() => Entry)
     entry: Entry
 
-    private _timestamp: number
     created_ymd: string
     set timestamp(ts: number) {
-        this._timestamp = ts
         const d = new Date(ts * 1000)
         this.created_ymd = sprintf('%04d/%02d/%02d', d.getFullYear(), d.getMonth() + 1, d.getDate())
     }
@@ -67,10 +64,8 @@ export class Entry {
     title: string
     eid: string
 
-    private _count: string
     count_int: number
     set count(count: string) {
-        this._count = count
         this.count_int = Number(count)
     }
 

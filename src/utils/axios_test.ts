@@ -1,5 +1,4 @@
-import createAxios, { url } from './axios'
-import { AxiosRequestConfig } from 'axios';
+import { url } from './axios'
 import { assert } from 'chai'
 
 describe('url', () => {
