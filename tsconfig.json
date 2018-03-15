@@ -6,6 +6,7 @@
         "rootDir": "src",
         "outDir": "dist/js",
         "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
         "strictPropertyInitialization": false,
         "noImplicitReturns": true,
         "noEmitOnError": true,
