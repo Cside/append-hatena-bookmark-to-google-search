@@ -72,10 +72,10 @@ const template = `
             border-bottom: 1px solid #ddd;
         }
         .hb-h2 {
-            font-size: 14px;
+            font-size: 15px;
         }
         .hb-h3 a {
-            font-size: 13px;
+            font-size: 14px;
             color: #333;
         }
         .hb-count a {
