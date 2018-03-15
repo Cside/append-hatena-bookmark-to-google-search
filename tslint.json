@@ -29,10 +29,7 @@
             true,
             "as-needed"
         ],
-        "object-shorthand": [
-            true,
-            "always"
-        ],
+        "object-literal-shorthand": true,
         "ordered-imports": true,
         "prefer-method-signature": true,
         "quotemark": [

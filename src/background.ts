@@ -106,7 +106,7 @@ type Req = { q: string[] }
             throw new Error(`invalid response.data: ${JSON.stringify(data)}`)
         return data.name
 
-    }).then(name => {
+    }).then((name) => {
         // TODO: cb にどんな型でも入れちゃえる気がする ...
         // TODO: 検索を実行して速攻で window 閉じたらエラーになるっぽい（接続先の window がなくなってるからかな）
         chrome.runtime.onMessage.addListener((
@@ -118,7 +118,7 @@ type Req = { q: string[] }
 
             const onSuccess = (res: AxiosResponse) => {
                 let error: Error | undefined
-                const b: Bookmarks | undefined = Bookmarks.fromObject(res.data, e => {
+                const b: Bookmarks | undefined = Bookmarks.fromObject(res.data, (e) => {
                     if (e) error = e
                 })
                 if (!b || error) {
@@ -132,10 +132,10 @@ type Req = { q: string[] }
             if (Cache && localStorage[url]) {
                 onSuccess(JSON.parse(localStorage[url]))
             } else {
-                createAxios().get(url).then(res => {
+                createAxios().get(url).then((res) => {
                     if (Cache) localStorage[url] = JSON.stringify(res)
                     return onSuccess(res)
-                }).catch(e => {
+                }).catch((e) => {
                     console.error(e)
                     cb({ error: e })
                 })
@@ -143,7 +143,7 @@ type Req = { q: string[] }
 
             return true
         })
-    }).catch(e => {
+    }).catch((e) => {
         // TODO: Error Handling
         console.error(e)
     })
