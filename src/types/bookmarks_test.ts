@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import { Bookmarks } from './bookmarks'
 
-describe('isValid', () => {
+describe('is valid args', () => {
     [
         {
             name: 'bookmarks is empty',
@@ -49,7 +49,7 @@ describe('isValid', () => {
     })
 })
 
-describe('fromObject', () => {
+describe('new', () => {
     it('can construct class', () => {
         const bookmarks = new Bookmarks('Cside', {
             bookmarks: [
@@ -95,6 +95,7 @@ describe('fromObject', () => {
         )
         assert.equal(bookmarks.meta.total, 59)
         assert.deepEqual(bookmarks.meta.query.queries, ['golang', 'go'])
+        assert.equal(bookmarks.url, 'http://b.hatena.ne.jp/Cside/search?q=golang%20go')
     })
 })
 
@@ -148,11 +149,52 @@ describe('emphasis queries', () => {
         },
     ].forEach((tt) => {
         it(`can surround "${tt.args.snippet}"`, () => {
-            const b = new Bookmarks('Cside', {
-                bookmarks: [{ entry: { url: '', snippet: tt.args.snippet } }],
-                meta: { query: { queries: tt.args.queries } },
+            assert.doesNotThrow(() => {
+                const b = new Bookmarks('Cside', {
+                    bookmarks: [{ entry: { url: '', snippet: tt.args.snippet } }],
+                    meta: { query: { queries: tt.args.queries } },
+                })
+                assert.equal(b.bookmarks[0].entry.snippet, tt.want)
             })
-            assert.equal(b.bookmarks[0].entry.snippet, tt.want)
+        })
+    })
+})
+
+describe('hasNext', () => {
+    const orig = Bookmarks.itemsPerPage
+    Bookmarks.itemsPerPage = 5
+    after(() => {
+        Bookmarks.itemsPerPage = orig
+    });
+
+    [
+        {
+            name: 'n < itemsPerPage',
+            total: 4,
+            want: false,
+        },
+        {
+            name: 'n === itemsPerPage',
+            total: 5,
+            want: false,
+        },
+        {
+            name: 'n > itemsPerPage',
+            total: 6,
+            want: true,
+        },
+    ].forEach((tt) => {
+        it(tt.name, () => {
+            assert.doesNotThrow(() => {
+                const bookmarks = new Bookmarks('Cside', {
+                    bookmarks: [{ entry: { url: '' } }],
+                    meta: {
+                        total: tt.total,
+                        query: { queries: [] },
+                    },
+                })
+                assert.equal(bookmarks.meta.hasNext, tt.want)
+            })
         })
     })
 })

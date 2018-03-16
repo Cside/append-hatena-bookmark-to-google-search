@@ -42,7 +42,10 @@ export class Bookmarks {
                     typeof res.bookmarks[0].entry.url === 'string'
                 )
             )
-        )) throw new Error(`Invalid bookmarks.`) // TODO
+        )) {
+            console.debug(JSON.stringify(res, null, '  '))
+            throw new Error(`Invalid bookmarks`)
+        }
 
         this.bookmarks = res.bookmarks
         this.meta = res.meta
