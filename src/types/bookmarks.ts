@@ -1,103 +1,80 @@
-import { plainToClass, Type } from 'class-transformer'
-import 'reflect-metadata'
 import { sprintf } from 'sprintf-js'
 
 export class Bookmarks {
-    @Type(() => Bookmark) // TODO: 本当にこれ無いと動かんのか？
-    bookmarks: Bookmark[]
-
-    _url: string
-
-    @Type(() => Meta)
-    meta: Meta
-
     static itemsPerPage = 5
 
-    // Bookmarks? だと怒られるの何故 ...。もしかして引数じゃないと使えないの？
-    static fromObject(obj: Object, cb: (error?: Error) => void): Bookmarks | undefined {
-        const bookmarks = plainToClass(Bookmarks, obj)
-        if (!Bookmarks.isValid(bookmarks)) {
-            cb(new Error(`Invalid bookmarks.`))
-            return
+    bookmarks: {
+        comment: string
+        created_ymd: string
+        timestamp: number
+        entry: {
+            snippet: string
+            title: string
+            url: string
+            eid: string
+            count: string
+            count_int: number
+            favicon_url: string
+            bookmark_url: string
+            hostname: string
         }
-        bookmarks.emphasisQueries()
-        return bookmarks
+    }[]
+
+    url: string
+
+    meta: {
+        total: number
+        query: {
+            queries: string[]
+        }
+        hasNext: boolean
     }
 
-    static isValid = (self: Bookmarks): boolean => {
-        return (
-            Array.isArray(self.bookmarks) && (
-                self.bookmarks.length === 0 || (
-                    self.bookmarks[0] instanceof Bookmark &&
-                    typeof self.bookmarks[0].entry == 'object' &&
-                    typeof self.bookmarks[0].entry.url === 'string'
+    constructor (username: string, res: any) {
+        if (!(
+            Array.isArray(res.bookmarks) && (
+                res.bookmarks.length === 0 || (
+                    (
+                        res.bookmarks[0] instanceof Object &&
+                        !Array.isArray(res.bookmarks[0])
+                    ) &&
+                    typeof res.bookmarks[0].entry == 'object' &&
+                    typeof res.bookmarks[0].entry.url === 'string'
                 )
             )
-        )
-    }
+        )) throw new Error(`Invalid bookmarks.`) // TODO
 
-    // TODO: これ明示的に呼び出すしかな無いのかな。できればインスタンス作る時に強制したいんだけど... 。
-    emphasisQueries() {
+        this.bookmarks = res.bookmarks
+        this.meta = res.meta
+        // TODO: これどうにかならん？
+        this.url = `http://b.hatena.ne.jp/${username}/search?q=${encodeURIComponent(res.meta.query.queries.join(' '))}`
+
+        const queryRegexps: RegExp[] = []
         this.meta.query.queries.forEach((query) => {
-            const re = new RegExp(`(${query})`, 'gi')
-            this.bookmarks.forEach((bookmark) => {
+            queryRegexps.push(new RegExp(`(${query})`, 'gi'))
+        })
+
+        this.bookmarks.forEach((bookmark) => {
+            const d = new Date(bookmark.timestamp * 1000)
+            bookmark.created_ymd = sprintf('%04d/%02d/%02d', d.getFullYear(), d.getMonth() + 1, d.getDate())
+
+            bookmark.entry.count_int = Number(bookmark.entry.count)
+
+            const loc = document.createElement('a')
+            loc.href = bookmark.entry.url
+            const scheme = loc.protocol
+            const baseUrl = `${scheme}//${loc.hostname}/`
+            bookmark.entry.hostname = loc.hostname
+            bookmark.entry.favicon_url = `https://cdn-ak.favicon.st-hatena.com/?url=${encodeURIComponent(baseUrl)}`
+            bookmark.entry.bookmark_url = 'http://b.hatena.ne.jp/entry/'
+                + ((scheme === 'https:') ? 's/' : '')
+                + bookmark.entry.url.replace(/https?:\/\//, '')
+
+            queryRegexps.forEach((re) => {
                 bookmark.entry.snippet = bookmark.entry.snippet.replace(re, `<strong>$1</strong>`)
             })
         })
+
+        this.meta.hasNext = this.meta.total > Bookmarks.itemsPerPage
     }
-}
-
-export class Bookmark {
-    comment: string
-
-    @Type(() => Entry)
-    entry: Entry
-
-    created_ymd: string
-    set timestamp(ts: number) {
-        const d = new Date(ts * 1000)
-        this.created_ymd = sprintf('%04d/%02d/%02d', d.getFullYear(), d.getMonth() + 1, d.getDate())
-    }
-}
-
-// TODO: export しなくても Boookmark.Entry みたいに参照できれば良い気がする
-export class Entry {
-    snippet: string
-    title: string
-    eid: string
-
-    count_int: number
-    set count(count: string) {
-        this.count_int = Number(count)
-    }
-
-    static schemaSeparationRegExp = new RegExp('^(https?)://(.+)$')
-    private _url: string
-    favicon_url: string
-    bookmark_url: string
-    hostname: string
-    get url(): string { return this._url }
-    set url(url: string) {
-        this._url = url
-
-        const loc = document.createElement('a')
-        loc.href = url
-
-        const scheme = loc.protocol
-        const baseUrl = `${scheme}//${loc.hostname}/`
-
-        this.hostname = loc.hostname
-        this.favicon_url = `https://cdn-ak.favicon.st-hatena.com/?url=${encodeURIComponent(baseUrl)}`
-        this.bookmark_url = 'http://b.hatena.ne.jp/entry/'
-            + ((scheme === 'https:') ? 's/' : '')
-            + url.replace(/https?:\/\//, '')
-    }
-}
-
-export class Meta {
-    total: number
-    query: {
-        queries: string[]
-    }
-    hasNext: boolean
 }

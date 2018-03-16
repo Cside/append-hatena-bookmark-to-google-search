@@ -27,7 +27,6 @@
     "@types/sprintf-js": "^1.1.0",
     "axios": "^0.18.0",
     "chai": "^4.1.2",
-    "class-transformer": "^0.1.9",
     "handlebars": "^4.0.11",
     "karma": "^2.0.0",
     "karma-chai": "^0.1.0",

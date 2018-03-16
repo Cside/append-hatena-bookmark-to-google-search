@@ -9,16 +9,18 @@ import { getQ } from './utils/url'
         throw new Error('Sidebar (#rhs_block) is not found.')
 
     chrome.runtime.sendMessage({ q }, (args: {
-        html: string,
+        html?: string,
         error?: Error,
     }) => {
+        console.log(JSON.stringify(args))
+        console.log(args)
         if (args.error) {
-            sideBlock.innerHTML = args.html // TODO
+            sideBlock.innerHTML = `<p>${String(args.error)}</p>`
             return
         }
         while (sideBlock.firstChild) {
             sideBlock.removeChild(sideBlock.firstChild)
         }
-        sideBlock.innerHTML = args.html
+        sideBlock.innerHTML = args.html || ''
     })
 })()

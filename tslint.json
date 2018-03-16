@@ -4,7 +4,6 @@
             true,
             "never"
         ],
-        "no-unused-expression": true,
         "no-trailing-whitespace": true,
         "align": [
             true,

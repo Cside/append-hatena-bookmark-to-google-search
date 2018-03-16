@@ -25,9 +25,9 @@ const templates: { [key: string]: string } = {
             </div>
           {{/each}}
         </div>
-        {{# if meta.hasNext}}
+        {{#if meta.hasNext}}
           <p><a href="{{url}}">もっと見る</a></p>
-        {{##/if}}
+        {{/if}}
 
         <style>
             /* ==============================================
