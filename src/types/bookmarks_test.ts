@@ -117,54 +117,42 @@ describe('bookmark_url', () => {
                     bookmarks: [{ entry: { url: tt.url } }],
                     meta: { query: { queries: [] } },
                 })
-                console.log(bookmarks)
                 assert.equal(bookmarks.bookmarks[0].entry.bookmark_url, tt.want)
             })
         })
     })
 })
 
-// describe('emphasisQueries', () => {
-//     [
-//         {
-//             args: {
-//                 snippet: 'Golang',
-//                 queries: ['Go'],
-//             },
-//             want: '<strong>Go</strong>lang',
-//         },
-//         {
-//             args: {
-//                 snippet: '仕事でGo言語書きたい',
-//                 queries: ['Go'],
-//             },
-//             want: '仕事で<strong>Go</strong>言語書きたい',
-//         },
-//         {
-//             args: {
-//                 snippet: 'GoGo',
-//                 queries: ['Go'],
-//             },
-//             want: '<strong>Go</strong><strong>Go</strong>',
-//         },
-//     ].forEach((tt) => {
-//         it(`can surround "${tt.args.snippet}"`, () => {
-//             const b = new Bookmarks('Cside', {
-//                 bookmarks: [
-//                     {
-//                         entry: {
-//                             url: '',
-//                             snippet: tt.args.snippet,
-//                         },
-//                     },
-//                 ],
-//                 meta: {
-//                     query: {
-//                         queries: tt.args.queries,
-//                     },
-//                 },
-//             } as Bookmarks)
-//             assert.equal(b.bookmarks[0].entry.snippet, tt.want)
-//         })
-//     })
-// })
+describe('emphasis queries', () => {
+    [
+        {
+            args: {
+                snippet: 'Golang',
+                queries: ['Go'],
+            },
+            want: '<strong>Go</strong>lang',
+        },
+        {
+            args: {
+                snippet: '仕事でGo言語書きたい',
+                queries: ['Go'],
+            },
+            want: '仕事で<strong>Go</strong>言語書きたい',
+        },
+        {
+            args: {
+                snippet: 'GoGo',
+                queries: ['Go'],
+            },
+            want: '<strong>Go</strong><strong>Go</strong>',
+        },
+    ].forEach((tt) => {
+        it(`can surround "${tt.args.snippet}"`, () => {
+            const b = new Bookmarks('Cside', {
+                bookmarks: [{ entry: { url: '', snippet: tt.args.snippet } }],
+                meta: { query: { queries: tt.args.queries } },
+            })
+            assert.equal(b.bookmarks[0].entry.snippet, tt.want)
+        })
+    })
+})
