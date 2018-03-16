@@ -98,27 +98,32 @@ describe('fromObject', () => {
     })
 })
 
-// describe('bookmark_url', () => {
-//     [
-//         {
-//             name: 'http',
-//             url: 'http://cside.me/foo/bar?id=100',
-//             want: 'http://b.hatena.ne.jp/entry/cside.me/foo/bar?id=100',
-//         },
-//         {
-//             name: 'https',
-//             url: 'https://cside.me/foo/bar?id=100',
-//             want: 'http://b.hatena.ne.jp/entry/s/cside.me/foo/bar?id=100',
-//         },
-//     ].forEach((tt) => {
-//         const entry = new Entry()
-//         entry.url = tt.url
-//         it(' automatically set', () => {
-//             assert.equal(entry.bookmark_url, tt.want)
-//         })
-//     })
-// })
-//
+describe('bookmark_url', () => {
+    [
+        {
+            name: 'http',
+            url: 'http://cside.me/foo/bar?id=100',
+            want: 'http://b.hatena.ne.jp/entry/cside.me/foo/bar?id=100',
+        },
+        {
+            name: 'https',
+            url: 'https://cside.me/foo/bar?id=100',
+            want: 'http://b.hatena.ne.jp/entry/s/cside.me/foo/bar?id=100',
+        },
+    ].forEach((tt) => {
+        it(tt.name, () => {
+            assert.doesNotThrow(() => {
+                const bookmarks = new Bookmarks('Cside', {
+                    bookmarks: [{ entry: { url: tt.url } }],
+                    meta: { query: { queries: [] } },
+                })
+                console.log(bookmarks)
+                assert.equal(bookmarks.bookmarks[0].entry.bookmark_url, tt.want)
+            })
+        })
+    })
+})
+
 // describe('emphasisQueries', () => {
 //     [
 //         {
