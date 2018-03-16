@@ -4,25 +4,31 @@ import Handlebars = require('handlebars')
 const templates: { [key: string]: string } = {
     search_result: `
         <h2 class="hb-h2">はてなブックマークの検索結果 ({{meta.total}}件)</h2>
-        {{#each bookmarks}}
+        <div>
+          {{#each bookmarks}}
             <div class="hb-entry">
-                <h3 class="hb-h3">
-                    <span class=""><img src="{{entry.favicon_url}}" /></span>
-                    <span class=""><a href="{{entry.url}}">{{entry.title}}</a></span>
-                </h3>
-                {{#if comment}}
-                     <p class="hb-comment">{{comment}}</p>
-                {{/if}}
-                <p class="hb-summary">
-                    <span class="hb-hostname"><a href="{{entry.url}}">{{entry.hostname}}</a></span>
-                    <span class="hb-count"><a href="{{entry.bookmark_url}}">{{entry.count_int}} users</a></span>
-                    <span class="hb-date">{{created_ymd}}</span>
-                </p>
-                <blockquote class="hb-snippet">
-                    {{{entry.snippet}}}
-                </blockquote>
+              <h3 class="hb-h3">
+                <span class=""><img src="{{entry.favicon_url}}" /></span>
+                <span class=""><a href="{{entry.url}}">{{entry.title}}</a></span>
+              </h3>
+              {{#if comment}}
+                 <p class="hb-comment">{{comment}}</p>
+              {{/if}}
+              <p class="hb-summary">
+                <span class="hb-hostname"><a href="{{entry.url}}">{{entry.hostname}}</a></span>
+                <span class="hb-count"><a href="{{entry.bookmark_url}}">{{entry.count_int}} users</a></span>
+                <span class="hb-date">{{created_ymd}}</span>
+              </p>
+              <blockquote class="hb-snippet">
+                {{{entry.snippet}}}
+              </blockquote>
             </div>
-        {{/each}}
+          {{/each}}
+        </div>
+        {{# if meta.hasNext}}
+          <p><a href="{{url}}">もっと見る</a></p>
+        {{##/if}}
+
         <style>
             /* ==============================================
                reset

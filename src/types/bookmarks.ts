@@ -6,6 +6,8 @@ export class Bookmarks {
     @Type(() => Bookmark) // TODO: 本当にこれ無いと動かんのか？
     bookmarks: Bookmark[]
 
+    _url: string
+
     @Type(() => Meta)
     meta: Meta
 
@@ -97,4 +99,5 @@ export class Meta {
     query: {
         queries: string[]
     }
+    hasNext: boolean
 }
