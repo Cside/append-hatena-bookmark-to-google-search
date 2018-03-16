@@ -1,9 +1,12 @@
 // TODO: runtime だけでなくて良いのか
 import Handlebars = require('handlebars')
 
+const color_black = '#333'
+const color_glay = '#999'
+
 const templates: { [key: string]: string } = {
     search_result: `
-        <h2 class="hb-h2">はてなブックマークの検索結果 ({{meta.total}}件)</h2>
+        <h2 class="hb-h2">はてなブックマークの検索結果：{{meta.total}}件（{{meta.elapsed}}秒）</h2>
         <div>
           {{#each bookmarks}}
             <div class="hb-entry">
@@ -16,8 +19,8 @@ const templates: { [key: string]: string } = {
               {{/if}}
               <p class="hb-summary">
                 <span class="hb-hostname"><a href="{{entry.url}}">{{entry.hostname}}</a></span>
-                <span class="hb-count"><a href="{{entry.bookmark_url}}">{{entry.count_int}} users</a></span>
                 <span class="hb-date">{{created_ymd}}</span>
+                <span class="hb-count"><a href="{{entry.bookmark_url}}">{{entry.count_int}} users</a></span>
               </p>
               <blockquote class="hb-snippet">
                 {{{entry.snippet}}}
@@ -26,7 +29,7 @@ const templates: { [key: string]: string } = {
           {{/each}}
         </div>
         {{#if meta.hasNext}}
-          <p><a href="{{url}}">もっと見る</a></p>
+          <p class="hb-more"><a href="{{url}}">もっと見る</a></p>
         {{/if}}
 
         <style>
@@ -36,7 +39,7 @@ const templates: { [key: string]: string } = {
             [class^="hb-"] {
                 font-family: Helvetica,Arial,Roboto,sans-serif !important;
                 font-size: 12px;
-                color: #333;
+                color: ${color_black};
                 line-height: 1.4;
             }
 
@@ -48,6 +51,9 @@ const templates: { [key: string]: string } = {
             /* ==============================================
                margin
                ============================================== */
+            .hb-entry {
+                padding: 4px 0 4px 0;
+            }
             .hb-h3,
             .hb-comment,
             .hb-summary,
@@ -63,6 +69,11 @@ const templates: { [key: string]: string } = {
             .hb-snippet {
                 margin-left: 1.5em;
             }
+            .hb-date,
+            .hb-snippet,
+            .hb-hostname a {
+                margin-right: 0.3em;
+            }
 
             /* ==============================================
                color && font-size && etc
@@ -70,24 +81,31 @@ const templates: { [key: string]: string } = {
             .hb-entry {
                 border-bottom: 1px solid #ddd;
             }
+
             .hb-h2 {
                 font-size: 15px;
             }
             .hb-h3 a {
                 font-size: 14px;
-                color: #333;
             }
+            .hb-more a {
+                font-size: 14px;
+            }
+
             .hb-count a {
                 color: #FF4166;
             }
             .hb-date,
-            .hb-snippet,
-            .hb-hostname a
-             {
-                color: #999;
+            .hb-snippet {
+                color: ${color_glay};
             }
-            .hb-snippet strong {
-                color: #333;
+            .hb-hostname a {
+                color: green;
+            }
+            .hb-h3 a,
+            .hb-snippet strong,
+            .hb-more a {
+                color: ${color_black};
             }
         </style>`,
 }

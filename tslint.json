@@ -42,7 +42,7 @@
                 "named": "never",
                 "asyncArrow": "always",
                 "method": "never",
-                "constructor": "always"
+                "constructor": "never"
             }
         ],
         "space-within-parens": 0,

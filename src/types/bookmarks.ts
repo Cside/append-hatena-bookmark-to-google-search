@@ -23,6 +23,7 @@ export class Bookmarks {
     url: string
 
     meta: {
+        elapsed: string
         total: number
         query: {
             queries: string[]
@@ -30,7 +31,7 @@ export class Bookmarks {
         hasNext: boolean
     }
 
-    constructor (username: string, res: any) {
+    constructor(username: string, res: any) {
         if (!(
             Array.isArray(res.bookmarks) && (
                 res.bookmarks.length === 0 || (
@@ -79,5 +80,6 @@ export class Bookmarks {
         })
 
         this.meta.hasNext = this.meta.total > Bookmarks.itemsPerPage
+        this.meta.elapsed = parseFloat(res.meta.elapsed).toFixed(2)
     }
 }

@@ -79,22 +79,27 @@ describe('new', () => {
         })
 
         // TODO: ちゃんとやるなら JSON 全体とまるっと比較すれば良い気がする
-        assert.equal(bookmarks.bookmarks[0].created_ymd, '2017/12/26')
-        assert.equal(bookmarks.bookmarks[0].entry.count_int, 35)
+        const bookmark = bookmarks.bookmarks[0]
+        assert.equal(bookmark.created_ymd, '2017/12/26')
+        assert.equal(bookmark.entry.count_int, 35)
         assert.equal(
-            bookmarks.bookmarks[0].entry.favicon_url,
+            bookmark.entry.favicon_url,
             'https://cdn-ak.favicon.st-hatena.com/?url=http%3A%2F%2Fchristina04.hatenablog.com%2F',
         )
         assert.equal(
-            bookmarks.bookmarks[0].entry.bookmark_url,
+            bookmark.entry.bookmark_url,
             'http://b.hatena.ne.jp/entry/christina04.hatenablog.com/entry/2017/01/06/190000',
         )
         assert.equal(
-            bookmarks.bookmarks[0].entry.hostname,
+            bookmark.entry.hostname,
             'christina04.hatenablog.com',
         )
-        assert.equal(bookmarks.meta.total, 59)
-        assert.deepEqual(bookmarks.meta.query.queries, ['golang', 'go'])
+
+        const meta = bookmarks.meta
+        assert.equal(meta.total, 59)
+        assert.equal(meta.elapsed, '5.58')
+        assert.deepEqual(meta.query.queries, ['golang', 'go'])
+
         assert.equal(bookmarks.url, 'http://b.hatena.ne.jp/Cside/search?q=golang%20go')
     })
 })
