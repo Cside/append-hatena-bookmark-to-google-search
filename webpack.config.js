@@ -18,6 +18,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'tslint-loader',
                 options: {
+                    tsConfigFile: 'tsconfig.json',
                     fix: true,
                 }
             },
