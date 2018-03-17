@@ -1,58 +1,13 @@
-# Chrome Extension TypeScript Starter
+# はてブ全文検索 to Google
 
-Chrome Extension, TypeScript and Visual Studio Code
+Google検索結果にはてなブックマーク全文検索結果も表示
 
-## Prerequisites
+## Screenshot
 
-* [node + npm](https://nodejs.org/) (Current Version)
-
-## Option
-
-* [Visual Studio Code](https://code.visualstudio.com/)
-
-## Includes the following
-
-* TypeScript
-* Webpack
-* Moment.js
-* Example Code
-    * Chrome Storage
-    * Options Version 2
-    * content script
-    * count up badge number
-    * background
-
-## Project Structure
-
-* src: TypeScript source files
-* dist: Chrome Extension directory
-* dist/js: Generated JavaScript files
+![](./screen_shot.png)
 
 ## Setup
 
 ```
 npm install
 ```
-
-## Import as Visual Studio Code project
-
-...
-
-## Build by watch mode
-
-### terminal
-
-```
-npm run build
-```
-
-### Visual Studio Code
-
-Run watch mode.
-
-type `Ctrl + Shift + B`
-
-## Load extension to chrome
-
-Load `dist` directory
-
