@@ -6,6 +6,10 @@ Google検索結果にはてなブックマーク全文検索結果も表示
 
 ![](./screen_shot.png)
 
+## Installation
+
+https://chrome.google.com/webstore/detail/nbcahioceknecihmhhhglhlndlcolhdf
+
 ## Setup
 
 ```
