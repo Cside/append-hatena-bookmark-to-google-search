@@ -9,19 +9,37 @@
     "tasks": [
         {
             "taskName": "install",
-            "args": ["install"]
-        },
-        {
-            "taskName": "update",
-            "args": ["update"]
+            "args": [
+                "install"
+            ]
         },
         {
             "taskName": "test",
-            "args": ["run", "test"]
+            "args": [
+                "run",
+                "test"
+            ]
         },
         {
             "taskName": "build",
-            "args": ["run", "watch"]
+            "args": [
+                "run",
+                "watch"
+            ]
+        },
+        {
+            "taskName": "lint",
+            "args": [
+                "run",
+                "lint"
+            ]
+        },
+        {
+            "taskName": "release",
+            "args": [
+                "run",
+                "release"
+            ]
         }
     ]
 }
