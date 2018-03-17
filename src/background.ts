@@ -11,6 +11,7 @@ type Req = { q: string[] }
 (() => {
     const compiler = HtmlRenderer.preCompile('search_result')
 
+    // TODO: このリクエストに失敗したときに救済する術を考えなければ...
     createAxios().get('http://b.hatena.ne.jp/my.name').then((res: AxiosResponse) => {
         return res.data.name
 

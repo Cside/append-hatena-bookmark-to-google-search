@@ -16,9 +16,7 @@ import { getQ } from './utils/url'
             console.error(args.error)
             sideBlock.innerHTML = `
                 <p>Error:</p>
-                <pre>
-                  <code>${JSON.stringify(args.error, null, '  ')}</code>
-                </pre>`
+                <pre><code>${JSON.stringify(args.error, null, '    ')}</code></pre>`
             return
         } else if (!args.html) {
             throw new Error('!error && !html')
