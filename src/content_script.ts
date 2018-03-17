@@ -12,12 +12,18 @@ import { getQ } from './utils/url'
         html?: string,
         error?: Error,
     }) => {
-        console.log(JSON.stringify(args))
-        console.log(args)
         if (args.error) {
-            sideBlock.innerHTML = `<p>${String(args.error)}</p>`
+            console.error(args.error)
+            sideBlock.innerHTML = `
+                <p>Error:</p>
+                <pre>
+                  <code>${JSON.stringify(args.error, null, '  ')}</code>
+                </pre>`
             return
+        } else if (!args.html) {
+            throw new Error('!error && !html')
         }
+
         while (sideBlock.firstChild) {
             sideBlock.removeChild(sideBlock.firstChild)
         }
