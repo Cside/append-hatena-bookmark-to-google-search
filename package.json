@@ -6,6 +6,7 @@
   "scripts": {
     "build": "$(npm bin)/webpack",
     "watch": "$(npm bin)/webpack -w",
+    "test": "$(npm bin)/karma start",
     "lint": "$(npm bin)/tslint --fix `git ls-files src`"
   },
   "author": "",
