@@ -5,7 +5,7 @@ import createAxios from './utils/axios'
 import HtmlRenderer from './utils/html_renderer'
 import { p } from './utils/log'
 
-const Cache = true // for development
+const Cache = false // true にしたまま publish してしまわない対策がいる気がする...
 type Req = { q: string[] }
 
 (() => {
@@ -16,13 +16,12 @@ type Req = { q: string[] }
 
     }).then((name) => {
         // TODO: 検索を実行して速攻で window 閉じたらエラーになるっぽい（接続先の window がなくなってるからかな）
+        //       ユーザー影響はないので重要度は高くない。
         chrome.runtime.onMessage.addListener((
             req: Req,
             _,
             cb: (args: { html?: string, error?: Error }) => void,
         ) => {
-            // /my/search でも出来るんだけど、302 redirect に 2 sec くらい持ってかれるので id 指定 ...
-
             const onSuccess = (res: AxiosResponse) => {
                 let b: Bookmarks
                 try {
