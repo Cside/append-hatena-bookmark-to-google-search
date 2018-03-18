@@ -73,6 +73,11 @@ describe('getQ', () => {
             search: '?safe=off&ei=XBauWsLyKcWf0gSbqoLoBA&q=%22foo+bar%22+baz&oq=%22foo+bar%22+baz&gs_l=psy-ab.3..35i39k1j0i203k1l5j0i30k1l2.949.1412.0.1623.4.4.0.0.0.0.201.398.0j1j1.2.0....0...1c.1.64.psy-ab..2.2.398...0.0.vNrrhcPdPqo',
             want: ['foo', 'bar', 'baz'],
         },
+        {
+            name: 'q = "東京 -大阪',
+            search: '?safe=off&ei=lRiuWvuOH4Ho0gSt74GgAw&q=%E6%9D%B1%E4%BA%AC+-%E5%A4%A7%E9%98%AA&oq=%E6%9D%B1%E4%BA%AC+-%E5%A4%A7%E9%98%AA&gs_l=psy-ab.3...41521.41521.0.41734.1.1.0.0.0.0.77.77.1.1.0....0...1c.2.64.psy-ab..0.0.0....0.-lyoptPiegE',
+            want: ['東京'],
+        },
     ].forEach((tt) => {
         it(tt.name, () => {
             assert.deepEqual(getQ(tt.search), tt.want)

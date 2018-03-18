@@ -8,5 +8,7 @@ export const getQ = (search: string): string[] => {
         replace(/[()"']/g, '').
         trim().
         split(/\s+/).
-        filter((elm) => { return elm !== 'OR' })
+        filter((elm) => {
+            return !(elm === 'OR' || /^\-/.test(elm))
+        })
 }
