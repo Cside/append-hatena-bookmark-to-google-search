@@ -50,8 +50,11 @@ export class Bookmarks {
 
         this.bookmarks = res.bookmarks
         this.meta = res.meta
-        // TODO: これどうにかならん？
-        this.url = `http://b.hatena.ne.jp/${username}/search?q=${encodeURIComponent(res.meta.query.queries.join(' '))}`
+        this.url = ((): string => {
+            const u = new URL(`http://b.hatena.ne.jp/${username}/search`)
+            u.searchParams.set('q', res.meta.query.queries.join(' '))
+            return u.href
+        })()
 
         const queryRegexps: RegExp[] = []
         this.meta.query.queries.forEach((query) => {

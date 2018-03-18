@@ -100,7 +100,7 @@ describe('new', () => {
         assert.equal(meta.elapsed, '5.58')
         assert.deepEqual(meta.query.queries, ['golang', 'go'])
 
-        assert.equal(bookmarks.url, 'http://b.hatena.ne.jp/Cside/search?q=golang%20go')
+        assert.equal(bookmarks.url, 'http://b.hatena.ne.jp/Cside/search?q=golang+go')
     })
 })
 
