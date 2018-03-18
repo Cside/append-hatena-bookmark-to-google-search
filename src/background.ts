@@ -3,7 +3,6 @@ import { AxiosResponse } from 'axios'
 import { Bookmarks } from './types/bookmarks'
 import createAxios from './utils/axios'
 import HtmlRenderer from './utils/html_renderer'
-import { p } from './utils/log'
 
 const Cache = false // true にしたまま publish してしまわない対策がいる気がする...
 type Req = { q: string[] }
@@ -27,7 +26,7 @@ type Req = { q: string[] }
                 let b: Bookmarks
                 try {
                     b = new Bookmarks(name, res.data as Bookmarks)
-                    p(`queries: ${JSON.stringify(b.meta.query.queries)}`)
+                    console.debug(`queries: ${JSON.stringify(b.meta.query.queries)}`)
                     cb({ html: compiler(b) })
 
                 } catch (e) {
@@ -35,10 +34,17 @@ type Req = { q: string[] }
                     cb({ error: e })
                 }
             }
-            // TODO これどうにかできんの ...
-            const url = `http://b.hatena.ne.jp/${name}/search/json?q=${encodeURIComponent(req.q.join(' '))}&limit=${Bookmarks.itemsPerPage}`
+
+            const url = ((): string => {
+                const u = new URL(`http://b.hatena.ne.jp/${name}/search/json`)
+                u.searchParams.set('q', req.q.join(' '))
+                u.searchParams.set('limit', String(Bookmarks.itemsPerPage))
+                return u.href
+            })()
+
             if (Cache && localStorage[url]) {
                 onSuccess(JSON.parse(localStorage[url]))
+
             } else {
                 createAxios().get(url).then((res) => {
                     if (Cache) localStorage[url] = JSON.stringify(res)
