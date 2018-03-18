@@ -1,7 +1,7 @@
 import { getQ } from './utils/url'
 
 (() => {
-    const q = getQ(location.href)
+    const q = getQ(location.search)
     if (!q) return
 
     const sideBlock = document.querySelector('#rhs_block')

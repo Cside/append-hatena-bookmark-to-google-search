@@ -1,10 +1,9 @@
-export const getQ = (url: string): string[] | undefined => {
-    const m = url.match(/[?&]q=([^&]+)/)
+export const getQ = (search: string): string[] => {
+    const params = new URLSearchParams(search)
+    const q = params.get('q')
+    if (!q) return []
 
-    // TODO: Go に慣れた身からすると string[] | undefined って違和感が...。
-    // とはいえ [], new Error(...) とか書くのは流石に Go っぽすぎ ... ?
-    if (!m) return undefined
     return decodeURIComponent(
-        m[1].replace(/\+/g, ' ')
+        q.replace(/\+/g, ' ')
     ).trim().split(/\s+/)
 }
