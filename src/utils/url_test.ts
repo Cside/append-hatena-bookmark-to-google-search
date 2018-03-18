@@ -59,9 +59,9 @@ describe('getQ', () => {
             want: ['foo', 'bar'],
         },
         {
-            name: 'q = (js OR perl)',
-            search: '?safe=off&ei=FROuWpnPB8n00gSPibrgDg&q=%28js+OR+perl%29&oq=%28js+OR+perl%29&gs_l=psy-ab.3...8883.14058.0.14245.14.13.0.0.0.0.156.1167.3j7.11.0....0...1c.1.64.psy-ab..5.8.1022.6..0j35i39k1j0i131k1j0i30k1j0i10i30k1.161.0yz3ugb2xbk',
-            want: ['js', 'perl'],
+            name: 'q = (js OR perl OR python)',
+            search: '?safe=off&ei=FROuWpnPB8n00gSPibrgDg&q=%28js+OR+perl+OR+python%29&oq=%28js+OR+perl%29&gs_l=psy-ab.3...8883.14058.0.14245.14.13.0.0.0.0.156.1167.3j7.11.0....0...1c.1.64.psy-ab..5.8.1022.6..0j35i39k1j0i131k1j0i30k1j0i10i30k1.161.0yz3ugb2xbk',
+            want: ['js', 'perl', 'python'],
         },
         {
             name: 'q = DESK ORGINIZER',
@@ -82,6 +82,11 @@ describe('getQ', () => {
             name: 'q = ありのまま*話すぜ',
             search: '?q=%E3%81%82%E3%82%8A%E3%81%AE%E3%81%BE%E3%81%BE*%E8%A9%B1%E3%81%99%E3%81%9C&oq=%E3%81%82%E3%82%8A%E3%81%AE%E3%81%BE%E3%81%BE*%E8%A9%B1%E3%81%99%E3%81%9C&aqs=chrome..69i57j0.7955j0j7&sourceid=chrome&ie=UTF-8',
             want: ['ありのまま*話すぜ'],
+        },
+        {
+            name: 'q = foo bar: site:cside.me',
+            search: '?safe=off&ei=PRuuWs24BoSV0gS_uoHICQ&q=foo+bar%3A+site%3Acside.me&oq=foo+bar%3A+site%3Acside.me&gs_l=psy-ab.3...2066.2631.0.2893.5.5.0.0.0.0.169.518.3j2.5.0....0...1c.1.64.psy-ab..2.0.0....0.86qI8f4cZpM',
+            want: ['foo', 'bar:'],
         },
     ].forEach((tt) => {
         it(tt.name, () => {

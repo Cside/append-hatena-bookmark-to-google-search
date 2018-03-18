@@ -9,6 +9,9 @@ export const getQ = (search: string): string[] => {
         trim().
         split(/\s+/).
         filter((elm) => {
-            return !(elm === 'OR' || /^\-/.test(elm))
+            return !(
+                elm === 'OR' ||
+                /^(?:\-|\w+:.+)/.test(elm)
+            )
         })
 }
