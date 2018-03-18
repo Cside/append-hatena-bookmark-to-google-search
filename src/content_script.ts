@@ -2,11 +2,13 @@ import { getQ } from './utils/url'
 
 (() => {
     const q = getQ(location.search)
-    if (!q) return
+    if (q.length === 0) return
 
     const sideBlock = document.querySelector('#rhs_block')
-    if (!sideBlock)
-        throw new Error('Sidebar (#rhs_block) is not found.')
+    if (!sideBlock) {
+        console.info('Sidebar (#rhs_block) is not found.')
+        return
+    }
 
     chrome.runtime.sendMessage({ q }, (args: {
         html?: string,
