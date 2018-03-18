@@ -64,7 +64,12 @@ describe('getQ', () => {
             want: ['js', 'perl'],
         },
         {
-            name: 'q = ("foo bar" baz)',
+            name: 'q = DESK ORGINIZER',
+            search: '?safe=off&ei=GxeuWubXAsyy0ASkm5bgDA&q=DESK+ORGINIZER&oq=DESK+ORGINIZER&gs_l=psy-ab.3..0i10i203k1j0i13i30k1l6j0i10i30k1.5353.18159.0.19539.34.24.10.0.0.0.156.2362.1j18.19.0....0...1c.1.64.psy-ab..5.29.2390...0j35i39k1j0i67k1j0i4k1j0i131k1j0i203k1j0i8i10i30k1j0i5i10i30k1j0i13i5i30k1.0.TFWisQAel1w',
+            want: ['DESK', 'ORGINIZER'],
+        },
+        {
+            name: 'q = "foo bar" baz',
             search: '?safe=off&ei=XBauWsLyKcWf0gSbqoLoBA&q=%22foo+bar%22+baz&oq=%22foo+bar%22+baz&gs_l=psy-ab.3..35i39k1j0i203k1l5j0i30k1l2.949.1412.0.1623.4.4.0.0.0.0.201.398.0j1j1.2.0....0...1c.1.64.psy-ab..2.2.398...0.0.vNrrhcPdPqo',
             want: ['foo', 'bar', 'baz'],
         },
