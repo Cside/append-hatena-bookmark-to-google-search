@@ -15,7 +15,7 @@ type Req = { q: string[] }
         return res.data.name
 
     }).then((name) => {
-        // TODO: 検索を実行して速攻で window 閉じたらエラーになるっぽい（接続先の window がなくなってるからかな）
+        // NOTE: 検索を実行して速攻で window 閉じたらエラーになるっぽい（接続先の window がなくなってるからかな）
         //       ユーザー影響はないので重要度は高くない。
         chrome.runtime.onMessage.addListener((
             req: Req,
@@ -58,7 +58,6 @@ type Req = { q: string[] }
             return true
         })
     }).catch((e) => {
-        // TODO: Error Handling
         console.error(e)
     })
 })()
