@@ -3,7 +3,8 @@ export const getQ = (search: string): string[] => {
     const q = params.get('q')
     if (!q) return []
 
-    return decodeURIComponent(
-        q.replace(/\+/g, ' ')
-    ).trim().split(/\s+/)
+    return q.
+        replace(/\+/g, ' ').
+        replace(/(?:\(|\)|OR)/g, '').
+        trim().split(/\s+/)
 }

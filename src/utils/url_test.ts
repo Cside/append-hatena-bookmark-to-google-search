@@ -58,6 +58,11 @@ describe('getQ', () => {
             search: '?safe=off&ei=wVumWoa3HMic0gS0lbaABQ&q=foo%E3%80%80bar&oq=foo%E3%80%80bar&gs_l=psy-ab.3..35i39k1l2j0l4j0i203k1l2.109967.123648.0.123829.20.12.8.0.0.0.331.1544.0j5j2j1.9.0....0...1c.1.64.psy-ab..4.16.1427.6..0i131k1j0i67k1j0i4k1.138.8h0tVgelWSo',
             want: ['foo', 'bar'],
         },
+        {
+            name: 'q = (js OR perl)',
+            search: '?safe=off&ei=FROuWpnPB8n00gSPibrgDg&q=%28js+OR+perl%29&oq=%28js+OR+perl%29&gs_l=psy-ab.3...8883.14058.0.14245.14.13.0.0.0.0.156.1167.3j7.11.0....0...1c.1.64.psy-ab..5.8.1022.6..0j35i39k1j0i131k1j0i30k1j0i10i30k1.161.0yz3ugb2xbk',
+            want: ['js', 'perl'],
+        },
     ].forEach((tt) => {
         it(tt.name, () => {
             assert.deepEqual(getQ(tt.search), tt.want)
