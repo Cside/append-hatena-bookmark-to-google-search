@@ -16,7 +16,7 @@ import { getQ } from './utils/url'
     }) => {
         if (args.error) {
             console.error(args.error)
-            sideBlock.innerHTML = `
+            sideBlock.innerHTML += `
                 <p>Error:</p>
                 <pre><code>${JSON.stringify(args.error, null, '    ')}</code></pre>`
             return
@@ -24,9 +24,6 @@ import { getQ } from './utils/url'
             throw new Error('!error && !html')
         }
 
-        while (sideBlock.firstChild) {
-            sideBlock.removeChild(sideBlock.firstChild)
-        }
-        sideBlock.innerHTML = args.html || ''
+        sideBlock.innerHTML += args.html || ''
     })
 })()
