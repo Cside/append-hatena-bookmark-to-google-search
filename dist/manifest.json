@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "はてブ全文検索 to Google",
+  "name": "はてなブックマーク全文検索 to Google",
   "description": "Google検索結果にはてなブックマーク全文検索結果も表示",
   "version": "1.0.2",
   "content_scripts": [{
