@@ -15,3 +15,9 @@ https://chrome.google.com/webstore/detail/nbcahioceknecihmhhhglhlndlcolhdf
 ```
 npm install
 ```
+
+## How to Release
+
+1. manifest.json のバージョン名を更新して commit
+2. `npm run release`
+3. 生成された zip ファイルを Chrome Web Store にアップロード

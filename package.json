@@ -8,7 +8,7 @@
     "watch": "$(npm bin)/webpack -w",
     "test": "$(npm bin)/karma start",
     "lint": "$(npm bin)/tslint --fix `git ls-files src`",
-    "release": "mkdir releases; zip -r ./releases/$(git tag | tail -1| sed 's/\\./_/g').$(date '+%Y%m%d_%H%M%S').zip ./dist"
+    "release": "sh ./scripts/release.sh"
   },
   "author": "",
   "license": "MIT",
