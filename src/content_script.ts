@@ -1,6 +1,9 @@
 import { getQ } from './utils/url'
 
 (() => {
+    // 地図検索モードのときは何もしない
+    if ((new URLSearchParams(location.search)).get('rllag') !== null) return
+
     const q = getQ(location.search)
     if (q.length === 0) return
 
